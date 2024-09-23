@@ -35,4 +35,9 @@ public class ClientiService {
     public Cliente getClienteById(UUID id) {
         return this.clientiRepository.findById(id).orElseThrow(() -> new NotFoundException("Nessun cliente trovato con id: " + id));
     }
+
+    public void deleteCliente(UUID id) {
+        Cliente found = this.getClienteById(id);
+        this.clientiRepository.delete(found);
+    }
 }

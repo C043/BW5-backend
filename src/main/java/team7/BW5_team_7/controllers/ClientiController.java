@@ -42,4 +42,10 @@ public class ClientiController {
     public Cliente getClienteById(@PathVariable UUID clienteId) {
         return this.clientiService.getClienteById(clienteId);
     }
+
+    @DeleteMapping("/{clienteId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCliente(@PathVariable UUID clienteId) {
+        this.clientiService.deleteCliente(clienteId);
+    }
 }
