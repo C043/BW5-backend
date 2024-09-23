@@ -14,14 +14,14 @@ import java.util.UUID;
 @Setter
 @ToString
 @NoArgsConstructor
-public class StatoFattua {
+public class StatoFattura {
     @Id
     @GeneratedValue
     @Setter(AccessLevel.NONE)
     private UUID idStatoFattura;
     private String nome;
 
-    public StatoFattua(String nome) {
+    public StatoFattura(String nome) {
         this.nome = nome;
     }
 }
