@@ -21,4 +21,6 @@ public interface ClientiRepository extends JpaRepository<Cliente, UUID> {
 
     @Query("SELECT c FROM Cliente c WHERE c.dataUltimoContatto= :data")
     List<Cliente> filterByDataUltimoContatto(LocalDate data);
+
+    List<Cliente> findByRagioneSocialeContainsIgnoreCase(String query);
 }
