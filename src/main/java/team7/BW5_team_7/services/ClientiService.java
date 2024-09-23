@@ -1,6 +1,10 @@
 package team7.BW5_team_7.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import team7.BW5_team_7.entities.Cliente;
 import team7.BW5_team_7.enums.TipoCliente;
@@ -18,5 +22,10 @@ public class ClientiService {
         Cliente newCliente = new Cliente(body.ragioneSociale(), body.partitaIva(), body.email(), body.fatturatoAnnuale(), body.pec(), body.telefono(),
                 body.emailContatto(), body.nomeContatto(), body.cognomeContatto(), body.telefonoContatto(), body.logoAziendale(), TipoCliente.valueOf(body.tipo()));
         return this.clientiRepository.save(newCliente);
+    }
+
+    public Page<Cliente> findAll(int page, int size, String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        return this.clientiRepository.findAll(pageable);
     }
 }
