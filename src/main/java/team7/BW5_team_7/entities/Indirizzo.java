@@ -1,10 +1,7 @@
 package team7.BW5_team_7.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import team7.BW5_team_7.enums.TipoIndirizzo;
 
 import java.util.UUID;
@@ -19,6 +16,7 @@ import java.util.UUID;
 public class Indirizzo {
     @Id
     @GeneratedValue
+    @Setter(AccessLevel.NONE)
     private UUID idIndirizzo;
     private String via;
     private int civico;
@@ -32,12 +30,13 @@ public class Indirizzo {
     @JoinColumn(name = "cliente")
     private Cliente cliente;
 
-    public Indirizzo(String via, int civico, String localita, int cap, String comune, TipoIndirizzo tipoIndirizzo) {
+    public Indirizzo(String via, int civico, String localita, int cap, String comune, Cliente cliente) {
         this.via = via;
         this.civico = civico;
         this.localita = localita;
         this.cap = cap;
         this.comune = comune;
-        this.tipoIndirizzo = tipoIndirizzo;
+        this.tipoIndirizzo = TipoIndirizzo.SEDE_LEGALE;
+        this.cliente = cliente;
     }
 }
