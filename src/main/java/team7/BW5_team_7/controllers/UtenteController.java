@@ -17,6 +17,7 @@ public class UtenteController {
 
     @Autowired
     private UtenteService utenteService;
+
     // TODO: gestire le autorizzazioni
 
     // endpoint per creare un nuovo utente
@@ -49,4 +50,10 @@ public class UtenteController {
     public Utente findAndUpdate(@PathVariable UUID idUtente, @RequestBody UtenteDTO body){
         return this.utenteService.findAndUpdate(idUtente, body);
     }
+
+    // TODO: ** rimuovi un ruolo
+//    @DeleteMapping("/{idUtente}/ruoli/{ruolo}")
+//    public void rimuoviRuolo(@PathVariable UUID idUtente, @PathVariable String ruolo){
+//        this.utenteService.findAndRemoveRuolo(idUtente, ruolo);
+//    }
 }

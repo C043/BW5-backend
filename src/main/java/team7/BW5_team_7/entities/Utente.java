@@ -1,17 +1,16 @@
 package team7.BW5_team_7.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
 @Data
-@ToString
 public class Utente {
 
     @Id
@@ -26,11 +25,42 @@ public class Utente {
     private String cognome;
     private String avatar;
 
-    public Utente(String username, String email, String password, String nome, String cognome) {
+    @ManyToMany(mappedBy = "utenti")
+    private List<Ruolo> ruoli = new ArrayList<>();
+
+    public Utente(String username,
+                  String email,
+                  String password,
+                  String nome,
+                  String cognome) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.nome = nome;
         this.cognome = cognome;
     }
+
+    public void aggiungiRuolo(Ruolo ruolo){
+        this.ruoli.add(ruolo);
+    }
+
+// TODO: da rifare il metodo -->
+//    public void rimuoviRuolo(Ruolo ruolo) {
+//        this.ruoli.remove(ruolo);
+//        ruolo.setUtente(null);
+//    }
+
+//    @Override
+//    public String toString() {
+//        return "Utente{" +
+//                "id=" + id +
+//                ", username='" + username + '\'' +
+//                ", email='" + email + '\'' +
+//                ", password='" + password + '\'' +
+//                ", nome='" + nome + '\'' +
+//                ", cognome='" + cognome + '\'' +
+//                ", avatar='" + avatar + '\'' +
+//                ", ruoli=" + ruoli +
+//                '}';
+//    }
 }
