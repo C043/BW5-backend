@@ -48,4 +48,12 @@ public class ClientiController {
     public void deleteCliente(@PathVariable UUID clienteId) {
         this.clientiService.deleteCliente(clienteId);
     }
+
+    @PutMapping("/{clienteId}")
+    public RespDTO putCliente(@PathVariable UUID clienteId, @RequestBody @Validated NewClienteDTO body, BindingResult validation) {
+        this.validation.validate(validation);
+        Cliente updatedCliente = this.clientiService.putCliente(clienteId, body);
+        return new RespDTO(updatedCliente.getId());
+    }
+
 }

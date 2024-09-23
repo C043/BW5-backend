@@ -40,4 +40,22 @@ public class ClientiService {
         Cliente found = this.getClienteById(id);
         this.clientiRepository.delete(found);
     }
+
+    public Cliente putCliente(UUID id, NewClienteDTO body) {
+        Cliente found = this.getClienteById(id);
+        found.setCognomeContatto(body.cognomeContatto());
+        found.setEmail(body.email());
+        found.setPec(body.pec());
+        found.setEmailContatto(body.emailContatto());
+        found.setTipo(TipoCliente.valueOf(body.tipo()));
+        found.setTelefono(body.telefono());
+        found.setLogoAziendale(body.logoAziendale());
+        found.setNomeContatto(body.nomeContatto());
+        found.setRagioneSociale(body.ragioneSociale());
+        found.setPartitaIve(body.partitaIva());
+        found.setFatturatoAnnuale(body.fatturatoAnnuale());
+        found.setTelefonoContatto(body.telefonoContatto());
+        this.clientiRepository.save(found);
+        return found;
+    }
 }
