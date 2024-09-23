@@ -1,10 +1,11 @@
-package team7.BW5_team_7;
+package team7.BW5_team_7.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import team7.BW5_team_7.enums.TipoIndirizzo;
 
 import java.util.UUID;
 
