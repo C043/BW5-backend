@@ -1,10 +1,7 @@
 package team7.BW5_team_7.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import team7.BW5_team_7.enums.TipoIndirizzo;
 
 import java.util.UUID;
@@ -19,6 +16,7 @@ import java.util.UUID;
 public class Indirizzo {
     @Id
     @GeneratedValue
+    @Setter(AccessLevel.NONE)
     private UUID idIndirizzo;
     private String via;
     private int civico;
