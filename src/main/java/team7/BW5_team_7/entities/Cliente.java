@@ -34,7 +34,7 @@ public class Cliente {
     private LocalDate dataUltimoContatto;
 
     @Column(name = "fatturato_annuale")
-    private Long fatturatoAnnuale;
+    private double fatturatoAnnuale;
 
     private String pec;
 
@@ -58,7 +58,8 @@ public class Cliente {
     @Enumerated(EnumType.STRING)
     private TipoCliente tipo;
 
-    public Cliente(String ragioneSociale, String partitaIve, String email, Long fatturatoAnnuale, String pec, int telefono, String emailContatto, String nomeContatto, String cognomeContatto, int telefonoContatto, String logoAziendale, TipoCliente tipo) {
+    public Cliente(String ragioneSociale, String partitaIve, String email, double fatturatoAnnuale, String pec, int telefono, String emailContatto, String nomeContatto,
+                   String cognomeContatto, int telefonoContatto, String logoAziendale, TipoCliente tipo) {
         this.ragioneSociale = ragioneSociale;
         this.partitaIve = partitaIve;
         this.email = email;
