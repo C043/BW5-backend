@@ -5,10 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Date;
 import java.util.UUID;
@@ -23,6 +20,7 @@ import java.util.UUID;
 public class Fatture {
     @Id
     @GeneratedValue
+    @Setter(AccessLevel.NONE)
     private UUID idFattura;
     private Date data;
     private double importo;
