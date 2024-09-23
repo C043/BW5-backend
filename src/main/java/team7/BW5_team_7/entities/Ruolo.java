@@ -45,4 +45,6 @@ public class Ruolo {
         this.utenti.add(utente);
     }
 
+    // TODO: creare metodo per rimuovere un utente
+
 }

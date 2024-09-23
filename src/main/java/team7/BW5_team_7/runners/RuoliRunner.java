@@ -7,6 +7,8 @@ import team7.BW5_team_7.services.UtenteService;
 
 public class RuoliRunner implements CommandLineRunner {
 
+    // TODO: valutare ed eliminare in caso questo Runner... un pochetto inutile
+
     @Autowired
     private UtenteService utenteService;
 

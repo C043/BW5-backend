@@ -7,6 +7,7 @@ import team7.BW5_team_7.repositories.RuoliRepository;
 
 @Service
 public class RuoliService {
+
     @Autowired
     private RuoliRepository ruoliRepository;
 

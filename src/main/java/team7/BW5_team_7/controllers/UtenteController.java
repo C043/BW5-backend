@@ -3,6 +3,7 @@ package team7.BW5_team_7.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import team7.BW5_team_7.entities.Utente;
 import team7.BW5_team_7.payloads.UtenteDTO;
@@ -21,6 +22,7 @@ public class UtenteController {
     // TODO: gestire le autorizzazioni
 
     // endpoint per creare un nuovo utente
+    // TODO: validare assolutamente i dati in ingresso con il @Validated (Mario ha già creato una classe apposita, grande Mario!)
     @PostMapping
     public UtenteRespDTO saveNewUtente(@RequestBody UtenteDTO body){
         return this.utenteService.save(body);

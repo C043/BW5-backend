@@ -20,4 +20,7 @@ public class Config {
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/**").permitAll());
         return httpSecurity.build();
     }
+
+    // TODO: inserire il Bean per criptare le password
+
 }
