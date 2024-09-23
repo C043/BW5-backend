@@ -20,7 +20,7 @@ import java.util.UUID;
 @ToString
 @NoArgsConstructor
 
-public class fatture {
+public class Fatture {
     @Id
     @GeneratedValue
     private UUID idFattura;
@@ -28,7 +28,7 @@ public class fatture {
     private double importo;
     private int numeroFattura;
 
-    public fatture(UUID idFattura, Date data, double importo, int numeroFattura) {
+    public Fatture(UUID idFattura, Date data, double importo, int numeroFattura) {
         this.idFattura = idFattura;
         this.data = data;
         this.importo = importo;
