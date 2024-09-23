@@ -28,6 +28,10 @@ public class Indirizzo {
     @Enumerated(EnumType.STRING)
     private TipoIndirizzo tipoIndirizzo;
 
+    @ManyToOne
+    @JoinColumn(name = "cliente")
+    private Cliente cliente;
+
     public Indirizzo(String via, int civico, String localita, int cap, String comune, TipoIndirizzo tipoIndirizzo) {
         this.via = via;
         this.civico = civico;
