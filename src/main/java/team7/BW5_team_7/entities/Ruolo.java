@@ -22,9 +22,6 @@ public class Ruolo {
 
     private String ruolo;
 
-//    @ManyToOne
-//    @JoinColumn(name = "utente_id")
-//    private Utente utente;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -48,12 +45,4 @@ public class Ruolo {
         this.utenti.add(utente);
     }
 
-//    @Override
-//    public String toString() {
-//        return "Ruolo{" +
-//                "id=" + id +
-//                ", ruolo='" + ruolo + '\'' +
-//                //", utente=" + utente +
-//                '}';
-//    }
 }

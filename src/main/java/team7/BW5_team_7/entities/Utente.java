@@ -50,17 +50,5 @@ public class Utente {
 //        ruolo.setUtente(null);
 //    }
 
-//    @Override
-//    public String toString() {
-//        return "Utente{" +
-//                "id=" + id +
-//                ", username='" + username + '\'' +
-//                ", email='" + email + '\'' +
-//                ", password='" + password + '\'' +
-//                ", nome='" + nome + '\'' +
-//                ", cognome='" + cognome + '\'' +
-//                ", avatar='" + avatar + '\'' +
-//                ", ruoli=" + ruoli +
-//                '}';
-//    }
+
 }
