@@ -17,7 +17,7 @@ public record NewClienteDTO(
         @NotNull(message = "La pec èè obbligatoria")
         String pec,
         @NotNull(message = "Il telefono è obbligatorio")
-        int telefono,
+        Long telefono,
         @NotNull(message = "L'email contatto è obbligatoria")
         @Email(message = "L'email inserita non è un indirizzo valido")
         String emailContatto,
@@ -26,7 +26,7 @@ public record NewClienteDTO(
         @NotNull(message = "Il cognome contatto è obbligatorio")
         String cognomeContatto,
         @NotNull(message = "Il telefono contatto è obbligatorio")
-        int telefonoContatto,
+        Long telefonoContatto,
         @NotNull(message = "Il logo aziendale è obbligatorio")
         String logoAziendale,
         @NotNull(message = "Il tipo è obbligatorio")
