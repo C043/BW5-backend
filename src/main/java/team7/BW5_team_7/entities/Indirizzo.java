@@ -30,12 +30,13 @@ public class Indirizzo {
     @JoinColumn(name = "cliente")
     private Cliente cliente;
 
-    public Indirizzo(String via, int civico, String localita, int cap, String comune, TipoIndirizzo tipoIndirizzo) {
+    public Indirizzo(String via, int civico, String localita, int cap, String comune, Cliente cliente) {
         this.via = via;
         this.civico = civico;
         this.localita = localita;
         this.cap = cap;
         this.comune = comune;
-        this.tipoIndirizzo = tipoIndirizzo;
+        this.tipoIndirizzo = TipoIndirizzo.SEDE_LEGALE;
+        this.cliente = cliente;
     }
 }
