@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 import team7.BW5_team_7.entities.Cliente;
 import team7.BW5_team_7.enums.TipoCliente;
 import team7.BW5_team_7.exceptions.BadRequestException;
+import team7.BW5_team_7.exceptions.NotFoundException;
 import team7.BW5_team_7.payloads.NewClienteDTO;
 import team7.BW5_team_7.repositories.ClientiRepository;
+
+import java.util.UUID;
 
 @Service
 public class ClientiService {
@@ -27,5 +30,9 @@ public class ClientiService {
     public Page<Cliente> findAll(int page, int size, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
         return this.clientiRepository.findAll(pageable);
+    }
+
+    public Cliente getClienteById(UUID id) {
+        return this.clientiRepository.findById(id).orElseThrow(() -> new NotFoundException("Nessun cliente trovato con id: " + id));
     }
 }

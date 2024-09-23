@@ -12,6 +12,8 @@ import team7.BW5_team_7.payloads.RespDTO;
 import team7.BW5_team_7.security.Validation;
 import team7.BW5_team_7.services.ClientiService;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/clienti")
 public class ClientiController {
@@ -34,5 +36,10 @@ public class ClientiController {
                                        @RequestParam(defaultValue = "ragioneSociale") String sortBy,
                                        @RequestParam(defaultValue = "5") int size) {
         return this.clientiService.findAll(page, size, sortBy);
+    }
+
+    @GetMapping("/{clienteId}")
+    public Cliente getClienteById(@PathVariable UUID clienteId) {
+        return this.clientiService.getClienteById(clienteId);
     }
 }
