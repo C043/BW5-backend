@@ -12,6 +12,7 @@ import team7.BW5_team_7.payloads.RespDTO;
 import team7.BW5_team_7.security.Validation;
 import team7.BW5_team_7.services.ClientiService;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -54,6 +55,11 @@ public class ClientiController {
         this.validation.validate(validation);
         Cliente updatedCliente = this.clientiService.putCliente(clienteId, body);
         return new RespDTO(updatedCliente.getId());
+    }
+
+    @GetMapping("/fatturatoAnnuale")
+    public List<Cliente> filterClientiByFatturatoAnnuale(@RequestParam(defaultValue = "0") double minimo) {
+        return this.clientiService.filterByFatturatoAnnuo(minimo);
     }
 
 }
