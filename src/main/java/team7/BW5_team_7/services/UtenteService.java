@@ -1,10 +1,12 @@
 package team7.BW5_team_7.services;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import team7.BW5_team_7.entities.Ruolo;
 import team7.BW5_team_7.entities.Utente;
@@ -15,6 +17,7 @@ import team7.BW5_team_7.repositories.UtenteRepository;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class UtenteService {
 
 
@@ -24,19 +27,24 @@ public class UtenteService {
     @Autowired
     private RuoliService ruoliService;
 
+    @Autowired
+    private PasswordEncoder bCrypt;
+
 
     public UtenteRespDTO save(UtenteDTO body){
 
         // controlli preliminari
         // TODO: controllare che lo username non sia presente nel db
+        if (this.utenteRepository.existsByUsername(body.username())) throw new RuntimeException("lo username è già presente, riprova");
         // TODO: controllare che la email non sia presente del db
+        if (this.utenteRepository.existsByEmail(body.email())) throw new RuntimeException("L'email è già presente, riprova");
 
         // creazione della classe Utente
         // TODO: criptare la password prima di mandare !!!
         Utente utente = new Utente(
                 body.username(),
                 body.email(),
-                body.password(),
+                bCrypt.encode(body.password()),
                 body.nome(),
                 body.cognome()
         );
@@ -49,9 +57,6 @@ public class UtenteService {
 
             // aggiungo il ruolo all'utente
             utente.aggiungiRuolo(roleFound);
-
-            // salvo il ruolo
-            this.ruoliService.saveRuolo(roleFound);
 
         } else {
             // crea il ruolo utente
@@ -70,8 +75,12 @@ public class UtenteService {
         // salvataggio del nuovo utente tramite repo
         this.utenteRepository.save(utente);
 
+        log.info("utente creato!!");
+
         // return del payload UtenteRespDTO
         return new UtenteRespDTO(utente.getId());
+
+
 
     }
 
@@ -82,6 +91,10 @@ public class UtenteService {
 
     public Utente findById(UUID idUtente){
         return this.utenteRepository.findById(idUtente).orElseThrow(() -> new RuntimeException("Utente non trovato"));
+    }
+
+    public Utente findByEmail(String email){
+        return this.utenteRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Utente non trovato con l'email " + email));
     }
 
 

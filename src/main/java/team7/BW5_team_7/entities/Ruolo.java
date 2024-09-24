@@ -12,7 +12,13 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties({"utenti"})
+@JsonIgnoreProperties({
+        "utenti",
+        "authorities",
+        "enabled",
+        "accountNonLocked",
+        "credentialsNonExpired",
+        "accountNonExpired"})
 public class Ruolo {
 
     @Id
