@@ -4,6 +4,7 @@ import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import team7.BW5_team_7.payloads.ErrorDTO;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,12 @@ public class ExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDTO handleBadRequest(BadRequestException ex) {
         return new ErrorDTO(ex.getMessage(), LocalDateTime.now());
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDTO handleBadValue(MethodArgumentTypeMismatchException ex) {
+        return new ErrorDTO("Il valore immesso non è valido", LocalDateTime.now());
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(NotFoundException.class)
