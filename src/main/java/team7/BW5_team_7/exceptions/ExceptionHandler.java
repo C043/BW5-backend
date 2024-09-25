@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import team7.BW5_team_7.payloads.ErrorDTO;
+import team7.BW5_team_7.payloads.ErrorPayload;
 
 import java.time.LocalDateTime;
 
@@ -13,32 +13,32 @@ import java.time.LocalDateTime;
 public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorDTO handleBadRequest(BadRequestException ex) {
-        return new ErrorDTO(ex.getMessage(), LocalDateTime.now());
+    public ErrorPayload handleBadRequest(BadRequestException ex) {
+        return new ErrorPayload(ex.getMessage(), LocalDateTime.now());
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorDTO handleBadValue(MethodArgumentTypeMismatchException ex) {
-        return new ErrorDTO("Il valore immesso non è valido", LocalDateTime.now());
+    public ErrorPayload handleBadValue(MethodArgumentTypeMismatchException ex) {
+        return new ErrorPayload("Il valore immesso non è valido", LocalDateTime.now());
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorDTO handleNotFound(NotFoundException ex) {
-        return new ErrorDTO(ex.getMessage(), LocalDateTime.now());
+    public ErrorPayload handleNotFound(NotFoundException ex) {
+        return new ErrorPayload(ex.getMessage(), LocalDateTime.now());
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(PropertyReferenceException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorDTO handleInvalidQueryParameter(PropertyReferenceException ex) {
-        return new ErrorDTO("Il parametro inserito non esiste", LocalDateTime.now());
+    public ErrorPayload handleInvalidQueryParameter(PropertyReferenceException ex) {
+        return new ErrorPayload("Il parametro inserito non esiste", LocalDateTime.now());
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorDTO handleException(Exception ex) {
+    public ErrorPayload handleException(Exception ex) {
         ex.printStackTrace();
-        return new ErrorDTO("Ci scusiamo per il disagio", LocalDateTime.now());
+        return new ErrorPayload("Ci scusiamo per il disagio", LocalDateTime.now());
     }
 }
