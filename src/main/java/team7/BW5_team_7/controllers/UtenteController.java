@@ -4,6 +4,7 @@ package team7.BW5_team_7.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import team7.BW5_team_7.entities.Utente;
@@ -25,7 +26,6 @@ public class UtenteController {
     // endpoint per creare un nuovo utente
     // TODO: validare assolutamente i dati in ingresso con il @Validated (Mario ha già creato una classe apposita, grande Mario!)
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
     public UtenteRespDTO saveNewUtente(@RequestBody UtenteDTO body){
         return this.utenteService.save(body);
     }
@@ -33,7 +33,6 @@ public class UtenteController {
     // ** stampa tutti gli utenti
     // TODO: mettere il sort se richiesto
     @GetMapping
-    @PreAuthorize("hasAuthority('UTENTE')")
     public Page<Utente> findAll(@RequestParam(defaultValue = "0") int page,
                                 @RequestParam(defaultValue = "5") int size){
         return this.utenteService.findAll(page, size);

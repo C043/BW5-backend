@@ -49,6 +49,8 @@ public class UtenteService {
                 body.cognome()
         );
 
+        utente.setAvatar("https://ui-avatars.com/api/?name="+utente.getNome()+"+"+utente.getCognome());
+
         // controllo se il ruolo UTENTE esiste già, sennò lo creo
         if (this.ruoliService.existsByRuolo("UTENTE")){
             //continua senza creare il ruolo UTENTE, ma lo assegno
@@ -70,8 +72,6 @@ public class UtenteService {
         }
 
 
-
-
         // salvataggio del nuovo utente tramite repo
         this.utenteRepository.save(utente);
 
@@ -79,9 +79,6 @@ public class UtenteService {
 
         // return del payload UtenteRespDTO
         return new UtenteRespDTO(utente.getId());
-
-
-
     }
 
     public Page<Utente> findAll (int page, int size){
@@ -100,13 +97,24 @@ public class UtenteService {
 
     public void findAndDelete(UUID idUtente){
         Utente found = this.findById(idUtente);
+
+        for (Ruolo ruolo : found.getRuoli()) {
+            ruolo.getUtenti().remove(found);
+            this.ruoliService.saveRuolo(ruolo);
+        }
+
         this.utenteRepository.delete(found);
+
     }
 
     public  Utente findAndUpdate(UUID idUtente, UtenteDTO body){
         // controlli preliminari
         // TODO: controllare che lo username non sia presente nel db
+        if (this.utenteRepository.existsByUsername(body.username())) throw new RuntimeException("lo username è già presente, riprova");
         // TODO: controllare che la email non sia presente del db
+        if (this.utenteRepository.existsByEmail(body.email())) throw new RuntimeException("L'email è già presente, riprova");
+
+        // cerco l'utente
         Utente found = this.findById(idUtente);
 
         // se ok, modificare i valori dell'utente trovato

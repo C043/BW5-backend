@@ -29,8 +29,6 @@ public class AuthController {
         return this.authService.checkAndCreateToken(body);
     }
 
-
-
     // endpoint per creare un nuovo utente
     // TODO: validare assolutamente i dati in ingresso con il @Validated (Mario ha già creato una classe apposita, grande Mario!)
     @PostMapping("/register")

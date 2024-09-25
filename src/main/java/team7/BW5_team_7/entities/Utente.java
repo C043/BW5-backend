@@ -37,7 +37,7 @@ public class Utente implements UserDetails {
     private String cognome;
     private String avatar;
 
-    @ManyToMany(mappedBy = "utenti", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "utenti", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Ruolo> ruoli = new ArrayList<>();
 
 
