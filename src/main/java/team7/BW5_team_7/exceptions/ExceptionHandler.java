@@ -1,6 +1,5 @@
 package team7.BW5_team_7.exceptions;
 
-import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -21,13 +20,7 @@ public class ExceptionHandler {
     public ErrorDTO handleNotFound(NotFoundException ex) {
         return new ErrorDTO(ex.getMessage(), LocalDateTime.now());
     }
-
-    @org.springframework.web.bind.annotation.ExceptionHandler(PropertyReferenceException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorDTO handleInvalidQueryParameter(PropertyReferenceException ex) {
-        return new ErrorDTO("Il parametro inserito non esiste", LocalDateTime.now());
-    }
-
+   
     @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorDTO handleException(Exception ex) {
