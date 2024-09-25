@@ -1,10 +1,6 @@
 package team7.BW5_team_7.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import team7.BW5_team_7.entities.Cliente;
 import team7.BW5_team_7.enums.TipoCliente;
@@ -29,9 +25,11 @@ public class ClientiService {
         return this.clientiRepository.save(newCliente);
     }
 
-    public Page<Cliente> findAll(int page, int size, String sortBy) {
+    public List<Cliente> findAll() {
+/*
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-        return this.clientiRepository.findAll(pageable);
+*/
+        return this.clientiRepository.findAll();
     }
 
     public Cliente getClienteById(UUID id) {

@@ -1,14 +1,16 @@
 package team7.BW5_team_7.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import team7.BW5_team_7.entities.Cliente;
+import team7.BW5_team_7.entities.CustomerSpec;
 import team7.BW5_team_7.payloads.NewClienteDTO;
 import team7.BW5_team_7.payloads.RespDTO;
+import team7.BW5_team_7.repositories.ClientiRepository;
 import team7.BW5_team_7.security.Validation;
 import team7.BW5_team_7.services.ClientiService;
 
@@ -25,6 +27,9 @@ public class ClientiController {
     @Autowired
     private Validation validation;
 
+    @Autowired
+    private ClientiRepository clientiRepository;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public RespDTO postCliente(@RequestBody @Validated NewClienteDTO body, BindingResult validation) {
@@ -34,10 +39,17 @@ public class ClientiController {
     }
 
     @GetMapping
-    public Page<Cliente> getAllClienti(@RequestParam(defaultValue = "0") int page,
+    public List<Cliente> getAllClienti(@RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "ragioneSociale") String sortBy,
-                                       @RequestParam(defaultValue = "5") int size) {
-        return this.clientiService.findAll(page, size, sortBy);
+                                       @RequestParam(defaultValue = "5") int size,
+                                       @RequestParam(required = false) String fatturatoAnnuale,
+                                       @RequestParam(required = false) LocalDate dataInserimento,
+                                       @RequestParam(required = false) LocalDate ultimoContatto,
+                                       @RequestParam(required = false) String ragioneSociale) {
+        if (fatturatoAnnuale == null && ultimoContatto == null && ragioneSociale == null && dataInserimento == null) return this.clientiService.findAll();
+        Specification<Cliente> spec =
+                Specification.where(CustomerSpec.fatturatoAnnualeFilter(fatturatoAnnuale)).and(CustomerSpec.parteDellaRagioneSocialeFilter(ragioneSociale));
+        return this.clientiRepository.findAll(spec);
     }
 
     @GetMapping("/{clienteId}")
@@ -56,11 +68,6 @@ public class ClientiController {
         this.validation.validate(validation);
         Cliente updatedCliente = this.clientiService.putCliente(clienteId, body);
         return new RespDTO(updatedCliente.getId());
-    }
-
-    @GetMapping("/fatturatoAnnuale")
-    public List<Cliente> filterClientiByFatturatoAnnuale(@RequestParam(defaultValue = "0") double minimo) {
-        return this.clientiService.filterByFatturatoAnnuo(minimo);
     }
 
     @GetMapping("/dataInserimento")
