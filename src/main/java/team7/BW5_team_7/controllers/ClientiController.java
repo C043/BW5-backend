@@ -72,9 +72,4 @@ public class ClientiController {
     public List<Cliente> filterByUltimoContatto(@RequestParam(defaultValue = "2024-09-23") LocalDate data) {
         return this.clientiService.filterByDataUltimoContatto(data);
     }
-
-    @GetMapping("/ragioneSociale")
-    public List<Cliente> filterByRagioneSociale(@RequestParam(defaultValue = " ") String contains) {
-        return this.clientiService.filterByRagioneSociale(contains);
-    }
 }
