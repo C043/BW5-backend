@@ -7,7 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import team7.BW5_team_7.entities.Indirizzo;
 import team7.BW5_team_7.payloads.IndirizzoDto;
-import team7.BW5_team_7.repositories.IndirizzoRepository;
+import team7.BW5_team_7.repositorys.IndirizzoRepository;
 
 import java.util.UUID;
 
