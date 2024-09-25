@@ -12,7 +12,6 @@ import team7.BW5_team_7.payloads.RespDTO;
 import team7.BW5_team_7.security.Validation;
 import team7.BW5_team_7.services.ClientiService;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -61,11 +60,6 @@ public class ClientiController {
     @GetMapping("/fatturatoAnnuale")
     public List<Cliente> filterClientiByFatturatoAnnuale(@RequestParam(defaultValue = "0") double minimo) {
         return this.clientiService.filterByFatturatoAnnuo(minimo);
-    }
-
-    @GetMapping("/dataInserimento")
-    public List<Cliente> filterByDataInserimento(@RequestParam(defaultValue = "2024-09-23") LocalDate data) {
-        return this.clientiService.filterByDataInserimento(data);
     }
 
 }
