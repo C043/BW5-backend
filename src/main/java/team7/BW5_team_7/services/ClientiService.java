@@ -13,8 +13,6 @@ import team7.BW5_team_7.exceptions.NotFoundException;
 import team7.BW5_team_7.payloads.NewClienteDTO;
 import team7.BW5_team_7.repositories.ClientiRepository;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -59,21 +57,5 @@ public class ClientiService {
         found.setTelefonoContatto(body.telefonoContatto());
         this.clientiRepository.save(found);
         return found;
-    }
-
-    public List<Cliente> filterByFatturatoAnnuo(double minimo) {
-        return this.clientiRepository.filterByMoreOrEqualFatturatoAnnuo(minimo);
-    }
-
-    public List<Cliente> filterByDataInserimento(LocalDate data) {
-        return this.clientiRepository.findByDataInserimento(data);
-    }
-
-    public List<Cliente> filterByDataUltimoContatto(LocalDate data) {
-        return this.clientiRepository.findByDataUltimoContatto(data);
-    }
-
-    public List<Cliente> filterByRagioneSociale(String query) {
-        return this.clientiRepository.findByRagioneSocialeContainsIgnoreCase(query);
     }
 }
