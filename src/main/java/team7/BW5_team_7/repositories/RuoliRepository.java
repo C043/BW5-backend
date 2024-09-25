@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface RuoliRepository extends JpaRepository<Ruolo, UUID> {
     Optional<Ruolo> findByRuolo(String ruolo);
     boolean existsByRuolo(String ruolo);
+
 }

@@ -14,6 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @JsonIgnoreProperties({
         "utenti",
+        "password",
         "authorities",
         "enabled",
         "accountNonLocked",

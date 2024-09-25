@@ -5,6 +5,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import team7.BW5_team_7.Exceptions.BadRequestException;
+import team7.BW5_team_7.Exceptions.UnauthorizedException;
 import team7.BW5_team_7.entities.Utente;
 
 import java.util.Date;
@@ -33,10 +35,8 @@ public class JWTTools {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             // TODO: da sistemare l'exception
-            throw new RuntimeException("Problemi col token! Per favore effettua di nuovo il login!");
+            throw new UnauthorizedException("Problemi col token! Per favore effettua di nuovo il login!");
         }
-
-
     }
 
     public String takeIdFromToken(String token){

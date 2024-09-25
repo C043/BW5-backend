@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @Data
 @JsonIgnoreProperties({
         "authorities",
+        "password",
         "enabled",
         "accountNonLocked",
         "credentialsNonExpired",

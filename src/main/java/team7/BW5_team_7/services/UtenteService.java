@@ -8,8 +8,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import team7.BW5_team_7.Exceptions.BadRequestException;
+import team7.BW5_team_7.Exceptions.NotFoundException;
 import team7.BW5_team_7.entities.Ruolo;
 import team7.BW5_team_7.entities.Utente;
+import team7.BW5_team_7.payloads.AddRuoliDTO;
 import team7.BW5_team_7.payloads.UtenteDTO;
 import team7.BW5_team_7.payloads.UtenteRespDTO;
 import team7.BW5_team_7.repositories.UtenteRepository;
@@ -87,11 +90,11 @@ public class UtenteService {
     }
 
     public Utente findById(UUID idUtente){
-        return this.utenteRepository.findById(idUtente).orElseThrow(() -> new RuntimeException("Utente non trovato"));
+        return this.utenteRepository.findById(idUtente).orElseThrow(() -> new NotFoundException("Utente non trovato"));
     }
 
     public Utente findByEmail(String email){
-        return this.utenteRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Utente non trovato con l'email " + email));
+        return this.utenteRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Utente non trovato con l'email " + email));
     }
 
 
@@ -110,9 +113,9 @@ public class UtenteService {
     public  Utente findAndUpdate(UUID idUtente, UtenteDTO body){
         // controlli preliminari
         // TODO: controllare che lo username non sia presente nel db
-        if (this.utenteRepository.existsByUsername(body.username())) throw new RuntimeException("lo username è già presente, riprova");
+        if (this.utenteRepository.existsByUsername(body.username())) throw new BadRequestException("lo username è già presente, riprova");
         // TODO: controllare che la email non sia presente del db
-        if (this.utenteRepository.existsByEmail(body.email())) throw new RuntimeException("L'email è già presente, riprova");
+        if (this.utenteRepository.existsByEmail(body.email())) throw new BadRequestException("L'email è già presente, riprova");
 
         // cerco l'utente
         Utente found = this.findById(idUtente);
@@ -133,6 +136,20 @@ public class UtenteService {
         this.utenteRepository.save(found);
 
         // ritorno l'utente per intero
+        return found;
+    }
+
+    public Utente findAndAddRuoli(UUID idUtente, AddRuoliDTO body){
+        // cerco l'utente
+        Utente found = this.findById(idUtente);
+
+        // cerco il ruolo o ruoli
+        for (String ruolo : body.ruoli()) {
+            Ruolo foundRuolo = this.ruoliService.findByRuolo(ruolo);
+            found.aggiungiRuolo(foundRuolo);
+        }
+
+        this.utenteRepository.save(found);
         return found;
     }
 

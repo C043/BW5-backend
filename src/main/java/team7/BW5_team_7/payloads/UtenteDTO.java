@@ -3,6 +3,7 @@ package team7.BW5_team_7.payloads;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public record UtenteDTO(
         @NotEmpty(message = "Username obbligatorio")
@@ -11,7 +12,8 @@ public record UtenteDTO(
         @Email
         String email,
         @NotEmpty(message = "password obbligatorio")
-        @Pattern(regexp = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/")
+        //@Pattern(regexp = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/")
+        @Size(min = 4, max = 16, message = "la password deve avere da 4 a 16 caratteri massimo")
         String password,
         @NotEmpty(message = "nome obbligatorio")
         String nome,
