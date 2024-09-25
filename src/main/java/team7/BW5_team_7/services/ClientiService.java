@@ -13,7 +13,6 @@ import team7.BW5_team_7.exceptions.NotFoundException;
 import team7.BW5_team_7.payloads.NewClienteDTO;
 import team7.BW5_team_7.repositories.ClientiRepository;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -58,9 +57,5 @@ public class ClientiService {
         found.setTelefonoContatto(body.telefonoContatto());
         this.clientiRepository.save(found);
         return found;
-    }
-
-    public List<Cliente> filterByFatturatoAnnuo(double minimo) {
-        return this.clientiRepository.filterByMoreOrEqualFatturatoAnnuo(minimo);
     }
 }
