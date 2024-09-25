@@ -5,6 +5,8 @@ import lombok.*;
 import team7.BW5_team_7.enums.TipoCliente;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -58,6 +60,9 @@ public class Cliente {
     @Enumerated(EnumType.STRING)
     private TipoCliente tipo;
 
+    @OneToMany(mappedBy = "cliente")
+    private List<Indirizzo> indirizzi = new ArrayList<>();
+   
     public Cliente(String ragioneSociale, String partitaIve, String email, double fatturatoAnnuale, String pec, Long telefono, String emailContatto, String nomeContatto,
                    String cognomeContatto, Long telefonoContatto, String logoAziendale, TipoCliente tipo) {
         this.ragioneSociale = ragioneSociale;
