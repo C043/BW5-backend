@@ -8,5 +8,4 @@ import java.util.UUID;
 
 @Repository
 public interface StatoFatturaRepository extends JpaRepository<StatoFattura, UUID> {
-    StatoFattura findByNome(String nome);
 }

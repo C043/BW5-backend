@@ -3,7 +3,6 @@ package team7.BW5_team_7.services;
 
 import org.springframework.stereotype.Service;
 import team7.BW5_team_7.entities.Fattura;
-import team7.BW5_team_7.entities.StatoFattura;
 import team7.BW5_team_7.repositories.FatturaRepository;
 
 import java.time.LocalDate;
@@ -13,9 +12,6 @@ import java.util.UUID;
 @Service
 public class FatturaService {
     private FatturaRepository fatturaRepository;
-
-    @Autowired
-    private StatoFatturaService statoFatturaService;
 
     public List<Fattura> getAllFatture() {
         return fatturaRepository.findAll();
@@ -52,9 +48,8 @@ public class FatturaService {
     }
 
     // Filtra le fatture per stato
-    public List<Fattura> filterByStato(String nome) {
-        StatoFattura found = this.statoFatturaService.findByNome(nome);
-        return fatturaRepository.findByStatoFattura(found);
+    public List<Fattura> filterByStato(String statoFattura) {
+        return fatturaRepository.findByStatoFattura(statoFattura);
     }
 
     // Filtra le fatture per data
