@@ -72,8 +72,4 @@ public class ClientiService {
     public List<Cliente> filterByDataUltimoContatto(LocalDate data) {
         return this.clientiRepository.filterByDataUltimoContatto(data);
     }
-
-    public List<Cliente> filterByRagioneSociale(String query) {
-        return this.clientiRepository.findByRagioneSocialeContainsIgnoreCase(query);
-    }
 }
