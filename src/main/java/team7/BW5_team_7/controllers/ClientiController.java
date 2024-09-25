@@ -68,4 +68,8 @@ public class ClientiController {
         return this.clientiService.filterByDataInserimento(data);
     }
 
+    @GetMapping("/dataUltimoContatto")
+    public List<Cliente> filterByUltimoContatto(@RequestParam(defaultValue = "2024-09-23") LocalDate data) {
+        return this.clientiService.filterByDataUltimoContatto(data);
+    }
 }
