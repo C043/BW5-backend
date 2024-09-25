@@ -16,11 +16,9 @@ public interface ClientiRepository extends JpaRepository<Cliente, UUID> {
     @Query("SELECT c FROM Cliente c WHERE c.fatturatoAnnuale >= :minimo")
     List<Cliente> filterByMoreOrEqualFatturatoAnnuo(double minimo);
 
-    @Query("SELECT c FROM Cliente c WHERE c.dataInserimento = :dataInserimento")
-    List<Cliente> filterByDataInserimento(LocalDate dataInserimento);
+    List<Cliente> findByDataInserimento(LocalDate dataInserimento);
 
-    @Query("SELECT c FROM Cliente c WHERE c.dataUltimoContatto= :data")
-    List<Cliente> filterByDataUltimoContatto(LocalDate data);
+    List<Cliente> findByDataUltimoContatto(LocalDate data);
 
     List<Cliente> findByRagioneSocialeContainsIgnoreCase(String query);
 }
