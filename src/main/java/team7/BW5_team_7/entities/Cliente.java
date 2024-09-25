@@ -34,11 +34,11 @@ public class Cliente {
     private LocalDate dataUltimoContatto;
 
     @Column(name = "fatturato_annuale")
-    private Long fatturatoAnnuale;
+    private double fatturatoAnnuale;
 
     private String pec;
 
-    private int telefono;
+    private Long telefono;
 
     @Column(name = "email_contatto")
     private String emailContatto;
@@ -50,7 +50,7 @@ public class Cliente {
     private String cognomeContatto;
 
     @Column(name = "telefono_contatto")
-    private int telefonoContatto;
+    private Long telefonoContatto;
 
     @Column(name = "logo_aziendale")
     private String logoAziendale;
@@ -58,7 +58,8 @@ public class Cliente {
     @Enumerated(EnumType.STRING)
     private TipoCliente tipo;
 
-    public Cliente(String ragioneSociale, String partitaIve, String email, Long fatturatoAnnuale, String pec, int telefono, String emailContatto, String nomeContatto, String cognomeContatto, int telefonoContatto, String logoAziendale, TipoCliente tipo) {
+    public Cliente(String ragioneSociale, String partitaIve, String email, double fatturatoAnnuale, String pec, Long telefono, String emailContatto, String nomeContatto,
+                   String cognomeContatto, Long telefonoContatto, String logoAziendale, TipoCliente tipo) {
         this.ragioneSociale = ragioneSociale;
         this.partitaIve = partitaIve;
         this.email = email;
