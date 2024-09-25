@@ -66,11 +66,11 @@ public class ClientiService {
     }
 
     public List<Cliente> filterByDataInserimento(LocalDate data) {
-        return this.clientiRepository.findByDataInserimento(data);
+        return this.clientiRepository.filterByDataInserimento(data);
     }
 
     public List<Cliente> filterByDataUltimoContatto(LocalDate data) {
-        return this.clientiRepository.findByDataUltimoContatto(data);
+        return this.clientiRepository.filterByDataUltimoContatto(data);
     }
 
     public List<Cliente> filterByRagioneSociale(String query) {
