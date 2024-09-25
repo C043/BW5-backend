@@ -1,7 +1,6 @@
 package team7.BW5_team_7.controllers;
 
 import org.apache.coyote.BadRequestException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/statofatture")
 public class StatoFatturaController {
-    @Autowired
     private StatoFatturaService statoFatturaService;
 
     @PostMapping
