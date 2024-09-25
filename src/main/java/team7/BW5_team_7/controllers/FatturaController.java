@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/fattura")
-
-
+@RequestMapping("/fatture")
 public class FatturaController {
+
+    @Autowired
     private FatturaService fatturaService;
 
     // Ottieni tutte le fatture
