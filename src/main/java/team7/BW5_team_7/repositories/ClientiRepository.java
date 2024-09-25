@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import team7.BW5_team_7.entities.Cliente;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,4 +15,7 @@ public interface ClientiRepository extends JpaRepository<Cliente, UUID> {
 
     @Query("SELECT c FROM Cliente c WHERE c.fatturatoAnnuale >= :minimo")
     List<Cliente> filterByMoreOrEqualFatturatoAnnuo(double minimo);
+
+    @Query("SELECT c FROM Cliente c WHERE c.dataInserimento = :dataInserimento")
+    List<Cliente> filterByDataInserimento(LocalDate dataInserimento);
 }
