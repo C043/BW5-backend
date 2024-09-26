@@ -4,7 +4,7 @@ package team7.BW5_team_7.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -21,7 +21,9 @@ public class Fattura {
     private UUID idFattura;
 
     @Column(name = "data")
-    private Date data;
+    private LocalDate data;
+
+    private int anno;
 
     @Column(name = "importo")
     private double importo;
@@ -38,13 +40,13 @@ public class Fattura {
     private StatoFattura statoFattura;
 
 
-    public Fattura(UUID idFattura, Date data, double importo, int numeroFattura, Cliente cliente) {
-        this.idFattura = idFattura;
-        this.data = data;
+    public Fattura(double importo, int numeroFattura, Cliente cliente, StatoFattura statoFattura) {
+        this.data = LocalDate.now();
+        this.anno = LocalDate.now().getYear();
         this.importo = importo;
         this.numeroFattura = numeroFattura;
         this.cliente = cliente;
-
+        this.statoFattura = statoFattura;
     }
 }
 
