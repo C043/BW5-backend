@@ -30,16 +30,13 @@ public class AuthController {
 
     // metodo per creare il token
     @PostMapping("/login")
+    @PreAuthorize("hasAuthority('ADMIN') or #idUtente == principal.id")
     public UtenteLoginRespDTO findAndCreateToken(@RequestBody UtenteLoginDTO body){
         return this.authService.checkAndCreateToken(body);
     }
 
     // endpoint per creare un nuovo utente
-    // TODO: validare assolutamente i dati in ingresso con il @Validated (Mario ha già creato una classe apposita, grande Mario!)
-
-    // sia utente che admin
     @PostMapping("/register")
-
     public UtenteRespDTO saveNewUtente(@RequestBody @Validated UtenteDTO body, BindingResult validation){
         this.validation.validate(validation);
         return this.utenteService.save(body);

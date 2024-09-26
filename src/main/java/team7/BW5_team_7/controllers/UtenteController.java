@@ -23,18 +23,8 @@ public class UtenteController {
     @Autowired
     private RuoliService ruoliService;
 
-    // TODO: gestire le autorizzazioni
-
-    // endpoint per creare un nuovo utente
-    // TODO: validare assolutamente i dati in ingresso con il @Validated
-
-//    @PostMapping
-//    public UtenteRespDTO saveNewUtente(@RequestBody UtenteDTO body){
-//        return this.utenteService.save(body);
-//    }
 
     // ** stampa tutti gli utenti
-    // TODO: mettere il sort se richiesto
     @GetMapping
     // può farlo solo admin
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -45,21 +35,11 @@ public class UtenteController {
 
     // ** cerca un singolo utente
     @GetMapping("/{idUtente}")
-    // pure admin
     @PreAuthorize("hasAuthority('ADMIN')")
     public Utente findById(@PathVariable UUID idUtente){
         return this.utenteService.findById(idUtente);
     }
 
-    // ** elimina un utente
-//    @DeleteMapping("/{idUtente}")
-//    // admin elimina tutti mentre l'utente se stesso
-//    @PreAuthorize("hasAuthority('ADMIN')")
-//    public void findAndDelete(@PathVariable UUID idUtente){
-//        this.utenteService.findAndDelete(idUtente);
-//    }
-
-    // -----------------------------------------
     @DeleteMapping("/{idUtente}")
     @PreAuthorize("hasAuthority('ADMIN') or #idUtente == principal.id")
     public void findAndDelete(@PathVariable UUID idUtente) {
@@ -67,16 +47,17 @@ public class UtenteController {
     }
 
 
-
     // ** modifica un utente
     @PutMapping("/{idUtente}")
     // admin modifica tutti mentre l'utente se stesso
+    @PreAuthorize("hasAuthority('ADMIN') or #idUtente == principal.id")
     public Utente findAndUpdate(@PathVariable UUID idUtente, @RequestBody UtenteDTO body){
         return this.utenteService.findAndUpdate(idUtente, body);
     }
 
     // endpoint per inserire un ruolo ad un utente
     @PutMapping("/roles/{idUtente}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Utente findAndAddRoles(@PathVariable UUID idUtente, @RequestBody @Validated AddRuoliDTO body){
        return this.utenteService.findAndAddRuoli(idUtente, body);
     }
@@ -88,6 +69,7 @@ public class UtenteController {
 
     // bisogna fare un metodo per creare ruoli
     @PostMapping("/roles")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public RuoloRespDTO newRuolo(@RequestBody RuoloDTO body){
         return this.ruoliService.saveNewRuolo(body);
     }

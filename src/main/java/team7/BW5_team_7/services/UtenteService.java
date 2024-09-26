@@ -37,13 +37,11 @@ public class UtenteService {
     public UtenteRespDTO save(UtenteDTO body) {
 
         // controlli preliminari
-        // TODO: controllare che lo username non sia presente nel db
         if (this.utenteRepository.existsByUsername(body.username())) throw new BadRequestException("lo username è già presente, riprova");
-        // TODO: controllare che la email non sia presente del db
+
         if (this.utenteRepository.existsByEmail(body.email())) throw new BadRequestException("L'email è già presente, riprova");
 
         // creazione della classe Utente
-        // TODO: criptare la password prima di mandare !!!
         Utente utente = new Utente(
                 body.username(),
                 body.email(),
@@ -112,25 +110,24 @@ public class UtenteService {
 
     public Utente findAndUpdate(UUID idUtente, UtenteDTO body) {
         // controlli preliminari
-        // TODO: controllare che lo username non sia presente nel db
+
         if (this.utenteRepository.existsByUsername(body.username())) throw new BadRequestException("lo username è già presente, riprova");
-        // TODO: controllare che la email non sia presente del db
+
         if (this.utenteRepository.existsByEmail(body.email())) throw new BadRequestException("L'email è già presente, riprova");
 
         // cerco l'utente
         Utente found = this.findById(idUtente);
 
         // se ok, modificare i valori dell'utente trovato
-        // TODO: criptare la password prima di mandare !!!
-        found.setPassword(body.password());
+        found.setPassword(bCrypt.encode(body.password()));
 
         found.setUsername(body.username());
         found.setNome(body.nome());
         found.setCognome(body.cognome());
         found.setEmail(body.email());
 
-        // TODO: controllare se è stato modificato e in caso, rimandare lo stesso avatar  PS: L'avatar è server-generated
-        found.setAvatar("example...");
+        // TODO: se necessario, generare un avatar
+        found.setAvatar(found.getAvatar());
 
         // una volta modificato, salvo tramite repo
         this.utenteRepository.save(found);
