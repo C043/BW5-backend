@@ -1,6 +1,10 @@
 package team7.BW5_team_7.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import team7.BW5_team_7.entities.Cliente;
 import team7.BW5_team_7.enums.TipoCliente;
@@ -9,7 +13,6 @@ import team7.BW5_team_7.exceptions.NotFoundException;
 import team7.BW5_team_7.payloads.NewClienteDTO;
 import team7.BW5_team_7.repositories.ClientiRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,10 +28,12 @@ public class ClientiService {
         return this.clientiRepository.save(newCliente);
     }
 
-    public List<Cliente> findAll() {
-/*
+    public Page<Cliente> findAll(int page, int size, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-*/
+        return this.clientiRepository.findAll(pageable);
+    }
+
+    public List<Cliente> findAll() {
         return this.clientiRepository.findAll();
     }
 
@@ -57,21 +62,5 @@ public class ClientiService {
         found.setTelefonoContatto(body.telefonoContatto());
         this.clientiRepository.save(found);
         return found;
-    }
-
-    public List<Cliente> filterByFatturatoAnnuo(double minimo) {
-        return this.clientiRepository.filterByMoreOrEqualFatturatoAnnuo(minimo);
-    }
-
-    public List<Cliente> filterByDataInserimento(LocalDate data) {
-        return this.clientiRepository.findByDataInserimento(data);
-    }
-
-    public List<Cliente> filterByDataUltimoContatto(LocalDate data) {
-        return this.clientiRepository.findByDataUltimoContatto(data);
-    }
-
-    public List<Cliente> filterByRagioneSociale(String query) {
-        return this.clientiRepository.findByRagioneSocialeContainsIgnoreCase(query);
     }
 }
