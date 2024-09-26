@@ -23,6 +23,8 @@ public class Fattura {
     @Column(name = "data")
     private LocalDate data;
 
+    private int anno;
+
     @Column(name = "importo")
     private double importo;
 
@@ -40,6 +42,7 @@ public class Fattura {
 
     public Fattura(double importo, int numeroFattura, Cliente cliente, StatoFattura statoFattura) {
         this.data = LocalDate.now();
+        this.anno = LocalDate.now().getYear();
         this.importo = importo;
         this.numeroFattura = numeroFattura;
         this.cliente = cliente;

@@ -16,4 +16,8 @@ public class FatturaSpec {
     public static Specification<Fattura> dataFatturaFilter(LocalDate date) {
         return (root, query, criteriaBuilder) -> date == null ? null : criteriaBuilder.equal(root.get("data"), date);
     }
+
+    public static Specification<Fattura> annoFilter(int anno) {
+        return (root, query, criteriaBuilder) -> anno == 0 ? null : criteriaBuilder.equal(root.get("anno"), anno);
+    }
 }
