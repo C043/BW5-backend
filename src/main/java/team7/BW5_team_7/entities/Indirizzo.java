@@ -20,9 +20,16 @@ public class Indirizzo {
     private UUID idIndirizzo;
     private String via;
     private int civico;
-    private String localita;
     private int cap;
-    private String comune;
+
+    @ManyToOne
+    @JoinColumn(name = "id_citta")
+    private Comune citta;
+
+    @ManyToOne
+    @JoinColumn(name = "provincia")
+    private Provincia provincia;
+
     @Enumerated(EnumType.STRING)
     private TipoIndirizzo tipoIndirizzo;
 
@@ -30,12 +37,12 @@ public class Indirizzo {
     @JoinColumn(name = "cliente")
     private Cliente cliente;
 
-    public Indirizzo(String via, int civico, String localita, int cap, String comune, Cliente cliente) {
+    public Indirizzo(String via, int civico, int cap, Comune citta, Cliente cliente) {
         this.via = via;
         this.civico = civico;
-        this.localita = localita;
+        this.citta = citta;
+        this.provincia = citta.getProvincia();
         this.cap = cap;
-        this.comune = comune;
         this.tipoIndirizzo = TipoIndirizzo.SEDE_LEGALE;
         this.cliente = cliente;
     }
