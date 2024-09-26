@@ -43,8 +43,10 @@ public class FatturaController {
                                        @RequestParam(required = false) UUID cliente,
                                        @RequestParam(required = false) String statoFattura,
                                        @RequestParam(required = false) LocalDate data,
-                                       @RequestParam(required = false) int anno) {
-        if (cliente == null && statoFattura == null && data == null && anno == 0) return fatturaService.getAllFatture();
+                                       @RequestParam(required = false) Integer anno,
+                                       @RequestParam(required = false) Double min,
+                                       @RequestParam(required = false) Double max) {
+        if (cliente == null && statoFattura == null && data == null && anno == null && min == null && max == null) return fatturaService.getAllFatture();
         Cliente found = null;
         StatoFattura foundStato = null;
         if (cliente != null) found = this.clientiService.getClienteById(cliente);
@@ -52,7 +54,9 @@ public class FatturaController {
         Specification<Fattura> spec = Specification.where(FatturaSpec.clienteFilter(found))
                 .and(FatturaSpec.statoFatturaFilter(foundStato))
                 .and(FatturaSpec.dataFatturaFilter(data))
-                .and(FatturaSpec.annoFilter(anno));
+                .and(FatturaSpec.annoFilter(anno))
+                .and(FatturaSpec.minImportiFilter(min))
+                .and(FatturaSpec.maxImportoFilter(max));
         return this.fatturaRepository.findAll(spec);
     }
 
