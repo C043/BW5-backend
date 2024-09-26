@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import team7.BW5_team_7.entities.Cliente;
 import team7.BW5_team_7.entities.Fattura;
 import team7.BW5_team_7.entities.FatturaSpec;
+import team7.BW5_team_7.entities.StatoFattura;
 import team7.BW5_team_7.payloads.FatturaDto;
 import team7.BW5_team_7.repositories.FatturaRepository;
 import team7.BW5_team_7.services.ClientiService;
 import team7.BW5_team_7.services.FatturaService;
+import team7.BW5_team_7.services.StatoFatturaService;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,15 +31,23 @@ public class FatturaController {
     @Autowired
     private FatturaRepository fatturaRepository;
 
+    @Autowired
+    private StatoFatturaService statoFatturaService;
+
     // Ottieni tutte le fatture
     @GetMapping
     public List<Fattura> getAllFatture(@RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "5") int size,
                                        @RequestParam(defaultValue = "") String sortBy,
-                                       @RequestParam(required = false) UUID cliente) {
-        if (cliente == null) return fatturaService.getAllFatture();
-        Cliente found = this.clientiService.getClienteById(cliente);
-        Specification<Fattura> spec = Specification.where(FatturaSpec.clienteFilter(found));
+                                       @RequestParam(required = false) UUID cliente,
+                                       @RequestParam(required = false) String statoFattura) {
+        if (cliente == null && statoFattura == null) return fatturaService.getAllFatture();
+        Cliente found = null;
+        StatoFattura foundStato = null;
+        if (cliente != null) found = this.clientiService.getClienteById(cliente);
+        if (statoFattura != null) foundStato = this.statoFatturaService.findByName(statoFattura);
+        Specification<Fattura> spec = Specification.where(FatturaSpec.clienteFilter(found))
+                .and(FatturaSpec.statoFatturaFilter(foundStato));
         return this.fatturaRepository.findAll(spec);
     }
 
