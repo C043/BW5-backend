@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
 import team7.BW5_team_7.entities.Cliente;
 import team7.BW5_team_7.entities.Comune;
 import team7.BW5_team_7.entities.Indirizzo;
+import team7.BW5_team_7.enums.TipoCliente;
 import team7.BW5_team_7.enums.TipoIndirizzo;
 import team7.BW5_team_7.exceptions.NotFoundException;
 import team7.BW5_team_7.payloads.IndirizzoDto;
+import team7.BW5_team_7.payloads.NewClienteDTO;
+import team7.BW5_team_7.repositories.ClientiRepository;
 import team7.BW5_team_7.repositories.ComuneRepository;
 import team7.BW5_team_7.repositories.IndirizzoRepository;
 
@@ -24,17 +27,28 @@ public class IndirizzoService {
     @Autowired
     private ComuneRepository comuneRepository;
     @Autowired
-    private ClientiService clientiService;
+    private ClientiRepository clientiRepository;
 
     public Indirizzo save(IndirizzoDto body) {
-
         Comune foundComune = this.comuneRepository.findByDenominazione(body.citta());
         if (foundComune == null) throw new NotFoundException("il Comune cercato non è Stato trovato!");
-        Cliente foundCliente = this.clientiService.getClienteById(UUID.fromString(body.cliente()));
+        Cliente foundCliente = this.clientiRepository.findById(UUID.fromString(body.cliente())).orElseThrow(() -> new NotFoundException("Cliente non trovato"));
         if (foundCliente == null) throw new NotFoundException("il Comune cercato non è Stato trovato!");
         Indirizzo indirizzo = new Indirizzo(body.via(), body.civico(), body.cap(), foundComune, foundCliente);
         return indirizzoRepository.save(indirizzo);
     }
+
+    public Cliente saveCliente(NewClienteDTO body) {
+        Comune foundComune = this.comuneRepository.findByDenominazione(body.citta());
+        if (foundComune == null) throw new NotFoundException("il Comune cercato non è Stato trovato!");
+        Cliente newCliente = new Cliente(body.ragioneSociale(), body.partitaIva(), body.email(), body.fatturatoAnnuale(), body.pec(), body.telefono(),
+                body.emailContatto(), body.nomeContatto(), body.cognomeContatto(), body.telefonoContatto(), body.logoAziendale(), TipoCliente.valueOf(body.tipo()));
+        Cliente cliente = this.clientiRepository.save(newCliente);
+        Indirizzo indirizzo = new Indirizzo(body.via(), body.civico(), body.cap(), foundComune, cliente);
+        this.indirizzoRepository.save(indirizzo);
+        return cliente;
+    }
+
 
     public Page<Indirizzo> findAll(int page, int size, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
@@ -48,7 +62,7 @@ public class IndirizzoService {
     public Indirizzo findAndUpdate(UUID idIndirizzo, IndirizzoDto body) throws Throwable {
         Comune foundComune = this.comuneRepository.findByDenominazione(body.citta());
         if (foundComune == null) throw new NotFoundException("il Comune cercato non è Stato trovato!");
-        Cliente foundCliente = this.clientiService.getClienteById(UUID.fromString(body.cliente()));
+        Cliente foundCliente = this.clientiRepository.findById(UUID.fromString(body.cliente())).orElseThrow(() -> new NotFoundException("Cliente non trovato"));
         if (foundCliente == null) throw new NotFoundException("il Comune cercato non è Stato trovato!");
         Indirizzo found = this.findById(idIndirizzo);
         found.setVia(body.via());
