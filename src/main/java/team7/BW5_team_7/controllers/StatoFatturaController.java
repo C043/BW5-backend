@@ -1,6 +1,7 @@
 package team7.BW5_team_7.controllers;
 
 import org.apache.coyote.BadRequestException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,13 +17,13 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/statofatture")
+@RequestMapping("/statoFatture")
 public class StatoFatturaController {
+    @Autowired
     private StatoFatturaService statoFatturaService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('ADMIN')")// SOLO GI ADMIN POSSONO ELIMINARE LE RISORSE
     public StatoFattureDtoResp saveIndirizzo(@RequestBody @Validated StatoFatturaDto body, BindingResult validationResult) throws
             BadRequestException {
         if (validationResult.hasErrors()) {
