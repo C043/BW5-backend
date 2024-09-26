@@ -5,9 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import team7.BW5_team_7.Exceptions.BadRequestException;
-import team7.BW5_team_7.Exceptions.NotFoundException;
+
 import team7.BW5_team_7.entities.Ruolo;
+import team7.BW5_team_7.exceptions.BadRequestException;
+import team7.BW5_team_7.exceptions.NotFoundException;
 import team7.BW5_team_7.payloads.RuoloDTO;
 import team7.BW5_team_7.payloads.RuoloRespDTO;
 import team7.BW5_team_7.repositories.RuoliRepository;

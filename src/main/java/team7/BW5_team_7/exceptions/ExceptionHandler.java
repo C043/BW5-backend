@@ -23,9 +23,9 @@ public class ExceptionHandler {
         return new ErrorPayload("Il valore immesso non è valido", LocalDateTime.now());
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(NotFoundException.class)
+    @org.springframework.web.bind.annotation.ExceptionHandler(team7.BW5_team_7.exceptions.NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorPayload handleNotFound(NotFoundException ex) {
+    public ErrorPayload handleNotFound(team7.BW5_team_7.exceptions.NotFoundException ex) {
         return new ErrorPayload(ex.getMessage(), LocalDateTime.now());
     }
 
