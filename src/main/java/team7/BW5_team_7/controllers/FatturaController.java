@@ -15,6 +15,7 @@ import team7.BW5_team_7.services.ClientiService;
 import team7.BW5_team_7.services.FatturaService;
 import team7.BW5_team_7.services.StatoFatturaService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,14 +41,16 @@ public class FatturaController {
                                        @RequestParam(defaultValue = "5") int size,
                                        @RequestParam(defaultValue = "") String sortBy,
                                        @RequestParam(required = false) UUID cliente,
-                                       @RequestParam(required = false) String statoFattura) {
-        if (cliente == null && statoFattura == null) return fatturaService.getAllFatture();
+                                       @RequestParam(required = false) String statoFattura,
+                                       @RequestParam(required = false) LocalDate data) {
+        if (cliente == null && statoFattura == null && data == null) return fatturaService.getAllFatture();
         Cliente found = null;
         StatoFattura foundStato = null;
         if (cliente != null) found = this.clientiService.getClienteById(cliente);
         if (statoFattura != null) foundStato = this.statoFatturaService.findByName(statoFattura);
         Specification<Fattura> spec = Specification.where(FatturaSpec.clienteFilter(found))
-                .and(FatturaSpec.statoFatturaFilter(foundStato));
+                .and(FatturaSpec.statoFatturaFilter(foundStato))
+                .and(FatturaSpec.dataFatturaFilter(data));
         return this.fatturaRepository.findAll(spec);
     }
 
