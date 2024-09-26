@@ -12,6 +12,7 @@ import team7.BW5_team_7.exceptions.BadRequestException;
 import team7.BW5_team_7.exceptions.NotFoundException;
 import team7.BW5_team_7.payloads.NewClienteDTO;
 import team7.BW5_team_7.repositories.ClientiRepository;
+import team7.BW5_team_7.repositories.IndirizzoRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,11 +22,18 @@ public class ClientiService {
     @Autowired
     private ClientiRepository clientiRepository;
 
+    @Autowired
+    private IndirizzoRepository indirizzoRepository;
+
+    @Autowired
+    private ComuneService comuneService;
+
+    @Autowired
+    private IndirizzoService indirizzoService;
+
     public Cliente postCliente(NewClienteDTO body) {
         if (this.clientiRepository.existsByEmail(body.email())) throw new BadRequestException("Il cliente esiste già");
-        Cliente newCliente = new Cliente(body.ragioneSociale(), body.partitaIva(), body.email(), body.fatturatoAnnuale(), body.pec(), body.telefono(),
-                body.emailContatto(), body.nomeContatto(), body.cognomeContatto(), body.telefonoContatto(), body.logoAziendale(), TipoCliente.valueOf(body.tipo()));
-        return this.clientiRepository.save(newCliente);
+        return this.indirizzoService.saveCliente(body);
     }
 
     public Page<Cliente> findAll(int page, int size, String sortBy) {

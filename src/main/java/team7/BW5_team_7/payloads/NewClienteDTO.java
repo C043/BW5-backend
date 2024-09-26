@@ -1,6 +1,7 @@
 package team7.BW5_team_7.payloads;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
@@ -31,6 +32,14 @@ public record NewClienteDTO(
         String logoAziendale,
         @NotNull(message = "Il tipo è obbligatorio")
         @Pattern(regexp = "^(PA|SAS|SPA|SRL)$")
-        String tipo
+        String tipo,
+        @NotEmpty(message = "Il Campo Via è obbligatorio!")
+        String via,
+        @NotNull(message = "Il Campo Civico è obbligatorio!")
+        int civico,
+        @NotEmpty(message = "Il Campo Città è obbligatorio!")
+        String citta,
+        @NotNull(message = "Il Campo Località è obbligatorio!")
+        int cap
 ) {
 }

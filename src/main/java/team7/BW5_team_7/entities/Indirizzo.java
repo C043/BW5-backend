@@ -1,7 +1,11 @@
 package team7.BW5_team_7.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import team7.BW5_team_7.enums.TipoIndirizzo;
 
 import java.util.UUID;
@@ -10,7 +14,6 @@ import java.util.UUID;
 @Table(name = "indirizzi")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 
 public class Indirizzo {
@@ -35,6 +38,7 @@ public class Indirizzo {
 
     @ManyToOne
     @JoinColumn(name = "cliente")
+    @JsonIgnore
     private Cliente cliente;
 
     public Indirizzo(String via, int civico, int cap, Comune citta, Cliente cliente) {
@@ -45,5 +49,19 @@ public class Indirizzo {
         this.cap = cap;
         this.tipoIndirizzo = TipoIndirizzo.SEDE_LEGALE;
         this.cliente = cliente;
+    }
+
+    @Override
+    public String toString() {
+        return "Indirizzo{" +
+                "idIndirizzo=" + idIndirizzo +
+                ", via='" + via + '\'' +
+                ", civico=" + civico +
+                ", cap=" + cap +
+                ", citta=" + citta.getDenominazione() +
+                ", provincia=" + provincia.getProvincia() +
+                ", tipoIndirizzo=" + tipoIndirizzo +
+                ", cliente=" + cliente.getId() +
+                '}';
     }
 }
