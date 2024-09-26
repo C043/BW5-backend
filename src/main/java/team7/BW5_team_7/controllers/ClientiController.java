@@ -48,7 +48,9 @@ public class ClientiController {
                                        @RequestParam(required = false) String ragioneSociale) {
         if (fatturatoAnnuale == null && ultimoContatto == null && ragioneSociale == null && dataInserimento == null) return this.clientiService.findAll();
         Specification<Cliente> spec =
-                Specification.where(CustomerSpec.fatturatoAnnualeFilter(fatturatoAnnuale)).and(CustomerSpec.parteDellaRagioneSocialeFilter(ragioneSociale));
+                Specification.where(CustomerSpec.fatturatoAnnualeFilter(fatturatoAnnuale))
+                        .and(CustomerSpec.parteDellaRagioneSocialeFilter(ragioneSociale))
+                        .and(CustomerSpec.dataInserimentoFilter(dataInserimento));
         return this.clientiRepository.findAll(spec);
     }
 
