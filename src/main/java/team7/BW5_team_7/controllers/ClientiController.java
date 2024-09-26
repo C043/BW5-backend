@@ -1,19 +1,20 @@
 package team7.BW5_team_7.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import team7.BW5_team_7.entities.Cliente;
+import team7.BW5_team_7.entities.CustomerSpec;
 import team7.BW5_team_7.payloads.NewClienteDTO;
 import team7.BW5_team_7.payloads.RespDTO;
+import team7.BW5_team_7.repositories.ClientiRepository;
 import team7.BW5_team_7.security.Validation;
 import team7.BW5_team_7.services.ClientiService;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -25,6 +26,9 @@ public class ClientiController {
     @Autowired
     private Validation validation;
 
+    @Autowired
+    private ClientiRepository clientiRepository;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public RespDTO postCliente(@RequestBody @Validated NewClienteDTO body, BindingResult validation) {
@@ -34,10 +38,21 @@ public class ClientiController {
     }
 
     @GetMapping
-    public Page<Cliente> getAllClienti(@RequestParam(defaultValue = "0") int page,
-                                       @RequestParam(defaultValue = "ragioneSociale") String sortBy,
-                                       @RequestParam(defaultValue = "5") int size) {
-        return this.clientiService.findAll(page, size, sortBy);
+    public Object getAllClienti(@RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "ragioneSociale") String sortBy,
+                                @RequestParam(defaultValue = "5") int size,
+                                @RequestParam(required = false) String fatturatoAnnuale,
+                                @RequestParam(required = false) LocalDate dataInserimento,
+                                @RequestParam(required = false) LocalDate ultimoContatto,
+                                @RequestParam(required = false) String ragioneSociale) {
+        if (fatturatoAnnuale == null && ultimoContatto == null && ragioneSociale == null && dataInserimento == null)
+            return this.clientiService.findAll(page, size, sortBy);
+        Specification<Cliente> spec =
+                Specification.where(CustomerSpec.fatturatoAnnualeFilter(fatturatoAnnuale))
+                        .and(CustomerSpec.parteDellaRagioneSocialeFilter(ragioneSociale))
+                        .and(CustomerSpec.dataInserimentoFilter(dataInserimento))
+                        .and(CustomerSpec.dataUltimoContattoFilter(ultimoContatto));
+        return this.clientiRepository.findAll(spec);
     }
 
     @GetMapping("/{clienteId}")
@@ -56,25 +71,5 @@ public class ClientiController {
         this.validation.validate(validation);
         Cliente updatedCliente = this.clientiService.putCliente(clienteId, body);
         return new RespDTO(updatedCliente.getId());
-    }
-
-    @GetMapping("/fatturatoAnnuale")
-    public List<Cliente> filterClientiByFatturatoAnnuale(@RequestParam(defaultValue = "0") double minimo) {
-        return this.clientiService.filterByFatturatoAnnuo(minimo);
-    }
-
-    @GetMapping("/dataInserimento")
-    public List<Cliente> filterByDataInserimento(@RequestParam(defaultValue = "2024-09-23") LocalDate data) {
-        return this.clientiService.filterByDataInserimento(data);
-    }
-
-    @GetMapping("/dataUltimoContatto")
-    public List<Cliente> filterByUltimoContatto(@RequestParam(defaultValue = "2024-09-23") LocalDate data) {
-        return this.clientiService.filterByDataUltimoContatto(data);
-    }
-
-    @GetMapping("/ragioneSociale")
-    public List<Cliente> filterByRagioneSociale(@RequestParam(defaultValue = " ") String contains) {
-        return this.clientiService.filterByRagioneSociale(contains);
     }
 }
