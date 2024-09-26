@@ -46,7 +46,8 @@ public class FatturaController {
                                        @RequestParam(required = false) Integer anno,
                                        @RequestParam(required = false) Double min,
                                        @RequestParam(required = false) Double max) {
-        if (cliente == null && statoFattura == null && data == null && anno == null && min == null && max == null) return fatturaService.getAllFatture();
+        if (cliente == null && statoFattura == null && data == null && anno == null && min == null && max == null)
+            return fatturaService.getAllFatture();
         Cliente found = null;
         StatoFattura foundStato = null;
         if (cliente != null) found = this.clientiService.getClienteById(cliente);
@@ -76,7 +77,7 @@ public class FatturaController {
 
     // Aggiorna una fattura
     @PutMapping("/{id}")
-    public ResponseEntity<Fattura> updateFattura(@PathVariable UUID id, @RequestBody Fattura dettagliFattura) {
+    public ResponseEntity<Fattura> updateFattura(@PathVariable UUID id, @RequestBody FatturaDto dettagliFattura) {
         Fattura fatturaAggiornata = fatturaService.updateFattura(id, dettagliFattura);
         return ResponseEntity.ok(fatturaAggiornata);
     }

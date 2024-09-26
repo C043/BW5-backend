@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Table(name = "fattura")
+@Table(name = "fatture")
 @Getter
 @Setter
 @ToString
@@ -28,7 +28,7 @@ public class Fattura {
     @Column(name = "importo")
     private double importo;
 
-    @Column(name = "numeroFattura")
+    @Column(name = "numeroFattura", unique = true)
     private int numeroFattura;
 
     @ManyToOne
@@ -48,5 +48,6 @@ public class Fattura {
         this.cliente = cliente;
         this.statoFattura = statoFattura;
     }
+
 }
 
