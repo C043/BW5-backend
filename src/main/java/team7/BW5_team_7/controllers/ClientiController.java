@@ -50,7 +50,8 @@ public class ClientiController {
         Specification<Cliente> spec =
                 Specification.where(CustomerSpec.fatturatoAnnualeFilter(fatturatoAnnuale))
                         .and(CustomerSpec.parteDellaRagioneSocialeFilter(ragioneSociale))
-                        .and(CustomerSpec.dataInserimentoFilter(dataInserimento));
+                        .and(CustomerSpec.dataInserimentoFilter(dataInserimento))
+                        .and(CustomerSpec.dataUltimoContattoFilter(ultimoContatto));
         return this.clientiRepository.findAll(spec);
     }
 

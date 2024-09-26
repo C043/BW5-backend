@@ -20,4 +20,8 @@ public class CustomerSpec {
     public static Specification<Cliente> dataInserimentoFilter(LocalDate dataInserimento) {
         return (root, query, criteriaBuilder) -> dataInserimento == null ? null : criteriaBuilder.equal(root.get("dataInserimento"), dataInserimento);
     }
+
+    public static Specification<Cliente> dataUltimoContattoFilter(LocalDate dataUltimoContatto) {
+        return (root, query, criteriaBuilder) -> dataUltimoContatto == null ? null : criteriaBuilder.equal(root.get("dataUltimoContatto"), dataUltimoContatto);
+    }
 }
