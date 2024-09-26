@@ -35,6 +35,12 @@ public class ExceptionHandler {
         return new ErrorPayload("Il parametro inserito non esiste", LocalDateTime.now());
     }
 
+    @org.springframework.web.bind.annotation.ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorPayload handleForbidden(UnauthorizedException ex) {
+        return new ErrorPayload(ex.getMessage(), LocalDateTime.now());
+    }
+   
     @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorPayload handleException(Exception ex) {
