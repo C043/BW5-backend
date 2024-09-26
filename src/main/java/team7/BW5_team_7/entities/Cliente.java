@@ -1,7 +1,10 @@
 package team7.BW5_team_7.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import team7.BW5_team_7.enums.TipoCliente;
 
 import java.time.LocalDate;
@@ -12,7 +15,6 @@ import java.util.UUID;
 @Table(name = "clienti")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class Cliente {
     @Id
@@ -59,8 +61,9 @@ public class Cliente {
     @Enumerated(EnumType.STRING)
     private TipoCliente tipo;
 
+    private String provincia;
+
     @OneToMany(mappedBy = "cliente")
-    @OrderBy("tipoIndirizzo ASC")
     private List<Indirizzo> listaIndirizzi;
 
     public Cliente(String ragioneSociale, String partitaIve, String email, double fatturatoAnnuale, String pec, Long telefono, String emailContatto, String nomeContatto,
@@ -79,5 +82,27 @@ public class Cliente {
         this.telefonoContatto = telefonoContatto;
         this.logoAziendale = logoAziendale;
         this.tipo = tipo;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", ragioneSociale='" + ragioneSociale + '\'' +
+                ", partitaIve='" + partitaIve + '\'' +
+                ", email='" + email + '\'' +
+                ", dataInserimento=" + dataInserimento +
+                ", dataUltimoContatto=" + dataUltimoContatto +
+                ", fatturatoAnnuale=" + fatturatoAnnuale +
+                ", pec='" + pec + '\'' +
+                ", telefono=" + telefono +
+                ", emailContatto='" + emailContatto + '\'' +
+                ", nomeContatto='" + nomeContatto + '\'' +
+                ", cognomeContatto='" + cognomeContatto + '\'' +
+                ", telefonoContatto=" + telefonoContatto +
+                ", logoAziendale='" + logoAziendale + '\'' +
+                ", tipo=" + tipo +
+                ", listaIndirizzi=" + listaIndirizzi +
+                '}';
     }
 }

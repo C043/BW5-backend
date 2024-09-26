@@ -43,6 +43,7 @@ public class IndirizzoService {
         if (foundComune == null) throw new NotFoundException("il Comune cercato non è Stato trovato!");
         Cliente newCliente = new Cliente(body.ragioneSociale(), body.partitaIva(), body.email(), body.fatturatoAnnuale(), body.pec(), body.telefono(),
                 body.emailContatto(), body.nomeContatto(), body.cognomeContatto(), body.telefonoContatto(), body.logoAziendale(), TipoCliente.valueOf(body.tipo()));
+        newCliente.setProvincia(foundComune.getProvincia().getProvincia());
         Cliente cliente = this.clientiRepository.save(newCliente);
         Indirizzo indirizzo = new Indirizzo(body.via(), body.civico(), body.cap(), foundComune, cliente);
         this.indirizzoRepository.save(indirizzo);
@@ -70,6 +71,10 @@ public class IndirizzoService {
         found.setCap(body.cap());
         found.setCitta(foundComune);
         found.setProvincia(foundComune.getProvincia());
+        if (found.getTipoIndirizzo() == TipoIndirizzo.SEDE_LEGALE) {
+            foundCliente.setProvincia(found.getProvincia().getProvincia());
+            this.clientiRepository.save(foundCliente);
+        }
         found.setCliente(foundCliente);
         return this.indirizzoRepository.save(found);
     }
