@@ -1,5 +1,6 @@
 package team7.BW5_team_7.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @Service
 public class StatoFatturaService {
+    @Autowired
     private StatoFatturaRepository statoFatturaRepository;
 
     public StatoFattura save(StatoFatturaDto body) {
