@@ -69,7 +69,7 @@ public class ComuneService {
                 .replaceAll("\\bMonza e della Brianza\\b", "Monza-Brianza")
                 .replaceAll("\\bLa Spezia\\b", "La-Spezia")
                 .replaceAll("\\bVibo Valentia\\b", "Vibo-Valentia")
-                .replaceAll("\\bSud Sardegna\\b", "Sassari")
+                .replaceAll("\\bSud Sardegna\\b", "Carbonia Iglesias")
                 .replaceAll("\\bAscoli Piceno\\b", "Ascoli-Piceno")
                 .replaceAll("\\bForlì-Cesena\\b", "Forli-Cesena")
                 .replaceAll("\\bValle d'Aosta/Vallée d'Aoste\\b", "Aosta")
