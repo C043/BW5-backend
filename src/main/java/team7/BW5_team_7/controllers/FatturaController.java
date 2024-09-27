@@ -38,7 +38,7 @@ public class FatturaController {
 
     // Ottieni tutte le fatture
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'UTENTE')")
     public List<Fattura> getAllFatture(@RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "5") int size,
                                        @RequestParam(defaultValue = "") String sortBy,
@@ -66,14 +66,14 @@ public class FatturaController {
     // Crea una nuova fattura
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'UTENTE')")
     public Fattura createFattura(@RequestBody FatturaDto body) {
         return this.fatturaService.createFattura(body);
     }
 
     // Ottieni una fattura per ID
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'UTENTE')")
     public ResponseEntity<Fattura> getFatturaById(@PathVariable UUID id) {
         Fattura fattura = fatturaService.getFatturaById(id);
         return ResponseEntity.ok(fattura);
@@ -81,7 +81,7 @@ public class FatturaController {
 
     // Aggiorna una fattura
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'UTENTE')")
     public ResponseEntity<Fattura> updateFattura(@PathVariable UUID id, @RequestBody FatturaDto dettagliFattura) {
         Fattura fatturaAggiornata = fatturaService.updateFattura(id, dettagliFattura);
         return ResponseEntity.ok(fatturaAggiornata);
@@ -89,7 +89,7 @@ public class FatturaController {
 
     // Elimina una fattura
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Void> deleteFattura(@PathVariable UUID id) {
         fatturaService.deleteFattura(id);
         return ResponseEntity.noContent().build();

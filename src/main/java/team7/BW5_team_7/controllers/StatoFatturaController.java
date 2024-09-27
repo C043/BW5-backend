@@ -24,7 +24,7 @@ public class StatoFatturaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'UTENTE')")
     public StatoFattureDtoResp saveIndirizzo(@RequestBody @Validated StatoFatturaDto body, BindingResult validationResult) throws
             BadRequestException {
         if (validationResult.hasErrors()) {
@@ -38,7 +38,7 @@ public class StatoFatturaController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Page<StatoFattura> findAll(@RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "10") int size,
                                       @RequestParam(defaultValue = "idStatoFattura") String sortBy) {
@@ -46,20 +46,20 @@ public class StatoFatturaController {
     }
 
     @GetMapping("/{idStatoFattura}")
-    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'UTENTE')")
     public StatoFattura findById(@PathVariable UUID idStatoFattura) {
         return this.statoFatturaService.findById(idStatoFattura);
     }
 
     @PutMapping("/{idStatoFattura}")
-    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'UTENTE')")
     @ResponseStatus(HttpStatus.CREATED)
     public StatoFattureDtoResp findAndUpdate(@PathVariable UUID idStatoFattura, @RequestBody StatoFatturaDto body) throws Throwable {
         return new StatoFattureDtoResp(this.statoFatturaService.findAndUpdate(idStatoFattura, body).getIdStatoFattura());
     }
 
     @DeleteMapping("/{idStatoFattura}")
-    @PreAuthorize("hasAuthority('ADMIN')")// SOLO GI ADMIN POSSONO ELIMINARE LE RISORSE
+    @PreAuthorize("hasAnyAuthority('ADMIN')")// SOLO GI ADMIN POSSONO ELIMINARE LE RISORSE
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findAndDelete(@PathVariable UUID idStatoFattura) {
         this.statoFatturaService.findAndDelete(idStatoFattura);

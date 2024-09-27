@@ -39,7 +39,7 @@ public class ClientiController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'UTENTE')")
     public Object getAllClienti(@RequestParam(defaultValue = "0") int page,
                                 @RequestParam(defaultValue = "ragioneSociale") String sortBy,
                                 @RequestParam(defaultValue = "5") int size,
@@ -58,20 +58,20 @@ public class ClientiController {
     }
 
     @GetMapping("/{clienteId}")
-    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'UTENTE')")
     public Cliente getClienteById(@PathVariable UUID clienteId) {
         return this.clientiService.getClienteById(clienteId);
     }
 
     @DeleteMapping("/{clienteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public void deleteCliente(@PathVariable UUID clienteId) {
         this.clientiService.deleteCliente(clienteId);
     }
 
     @PutMapping("/{clienteId}")
-    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'UTENTE')")
     public RespDTO putCliente(@PathVariable UUID clienteId, @RequestBody @Validated NewClienteDTO body, BindingResult validation) {
         this.validation.validate(validation);
         Cliente updatedCliente = this.clientiService.putCliente(clienteId, body);
