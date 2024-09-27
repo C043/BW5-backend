@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import team7.BW5_team_7.entities.Utente;
+import team7.BW5_team_7.exceptions.UnauthorizedException;
 import team7.BW5_team_7.services.UtenteService;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) throw new RuntimeException("Inserisci correttamente il token nell'autorizzazione");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) throw new UnauthorizedException("Inserisci correttamente il token nell'autorizzazione");
         String accessToken = authHeader.substring(7);
         jwtTools.verifyToken(accessToken);
         String id = jwtTools.takeIdFromToken(accessToken);
