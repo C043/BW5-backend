@@ -5,13 +5,19 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import team7.BW5_team_7.entities.Provincia;
+import team7.BW5_team_7.exceptions.NotFoundException;
 import team7.BW5_team_7.repositories.ProvinciaRepository;
 
 import java.io.FileReader;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProvinciaService {
@@ -42,4 +48,16 @@ public class ProvinciaService {
         }
     }
 
+    public Page<Provincia> findAllProvincia(int page, int size, String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        return this.provinciaRepository.findAll(pageable);
+    }
+
+    public Provincia findById(UUID idProvincia) {
+        return provinciaRepository.findById(idProvincia).orElseThrow(() -> new NotFoundException("Provincia Non Trovata!"));
+    }
+
+    public Provincia findByProvincia(String provincia) {
+        return this.provinciaRepository.findByProvincia(provincia).orElseThrow(() -> new NotFoundException("Provincia Non Trovata!"));
+    }
 }
