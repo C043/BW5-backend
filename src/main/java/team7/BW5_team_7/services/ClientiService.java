@@ -38,6 +38,7 @@ public class ClientiService {
     public Cliente postCliente(NewClienteDTO body) {
         if (this.clientiRepository.existsByEmail(body.email())) throw new BadRequestException("Il cliente esiste già");
         Cliente clienteDaSalvare = this.indirizzoService.saveCliente(body);
+        clienteDaSalvare.setLogoAziendale("https://ui-avatars.com/api/?name=" + clienteDaSalvare.getRagioneSociale().split(" ")[0] + clienteDaSalvare.getRagioneSociale().split(" ")[1]);
         mailgunSender.sendRegistrationEmail(clienteDaSalvare);
         return clienteDaSalvare;
     }
@@ -75,11 +76,5 @@ public class ClientiService {
         found.setTelefonoContatto(body.telefonoContatto());
         this.clientiRepository.save(found);
         return found;
-    }
-
-    public Cliente setLogo(UUID idCliente, NewClienteDTO body) {
-        Cliente found = this.getClienteById(idCliente);
-        found.setLogoAziendale(body.getLogoAziendale());
-        return this.clientiRepository.save(found);
     }
 }

@@ -45,7 +45,7 @@ public class IndirizzoService {
         if (foundComune == null) throw new NotFoundException("il Comune cercato non è Stato trovato!");
         Cliente newCliente = new Cliente(body.ragioneSociale(), body.partitaIva(), body.email(), body.fatturatoAnnuale(), body.pec(), body.telefono(),
                 body.emailContatto(), body.nomeContatto(), body.cognomeContatto(), body.telefonoContatto(), TipoCliente.valueOf(body.tipo()));
-        newCliente.setProvincia(String.valueOf(foundComune));
+        newCliente.setProvincia(foundComune.getProvincia().getProvincia());
         Cliente cliente = this.clientiRepository.save(newCliente);
         Indirizzo indirizzo = new Indirizzo(body.via(), body.civico(), body.cap(), foundComune, cliente);
 

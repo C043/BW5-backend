@@ -77,10 +77,4 @@ public class ClientiController {
         Cliente updatedCliente = this.clientiService.putCliente(clienteId, body);
         return new RespDTO(updatedCliente.getId());
     }
-
-    @PatchMapping("/setlogo/{clienteId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public RespDTO setLogoCliente(@PathVariable UUID clienteId, @RequestBody NewClienteDTO body) {
-        return new RespDTO(this.clientiService.setLogo(clienteId, body).getId());
-    }
 }
