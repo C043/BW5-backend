@@ -10,8 +10,8 @@ public record IndirizzoDto(
         int civico,
         @NotEmpty(message = "Il Campo Città è obbligatorio!")
         String citta,
-        @NotNull(message = "Il Campo Località è obbligatorio!")
-        int cap,
+        @NotEmpty(message = "Il Campo Località è obbligatorio!")
+        String cap,
         @NotEmpty(message = "Il Campo Cliente è obbligatorio!")
         String cliente) {
 }

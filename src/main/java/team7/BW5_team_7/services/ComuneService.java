@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team7.BW5_team_7.entities.Comune;
 import team7.BW5_team_7.entities.Provincia;
+import team7.BW5_team_7.exceptions.NotFoundException;
 import team7.BW5_team_7.repositories.ComuneRepository;
 import team7.BW5_team_7.repositories.ProvinciaRepository;
 
 import java.io.FileReader;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -78,7 +80,15 @@ public class ComuneService {
                 .trim();
     }
 
-    public Comune findByName(String citta) {
-        return this.comuneRepository.findByDenominazione(citta);
+    public Comune findByName(String comune) {
+        Comune found = this.comuneRepository.findByDenominazione(comune);
+        if (found == null) {
+            throw new NotFoundException("Comune non trovato trovato");
+        }
+        return found;
+    }
+
+    public Comune indById(UUID idCcomune) {
+        return this.comuneRepository.findById(idCcomune).orElseThrow(() -> new NotFoundException("Comune non trovato!"));
     }
 }

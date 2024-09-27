@@ -67,7 +67,7 @@ public class Cliente {
     private List<Indirizzo> listaIndirizzi;
 
     public Cliente(String ragioneSociale, String partitaIve, String email, double fatturatoAnnuale, String pec, Long telefono, String emailContatto, String nomeContatto,
-                   String cognomeContatto, Long telefonoContatto, String logoAziendale, TipoCliente tipo) {
+                   String cognomeContatto, Long telefonoContatto, TipoCliente tipo) {
         this.ragioneSociale = ragioneSociale;
         this.partitaIve = partitaIve;
         this.email = email;
@@ -80,7 +80,7 @@ public class Cliente {
         this.nomeContatto = nomeContatto;
         this.cognomeContatto = cognomeContatto;
         this.telefonoContatto = telefonoContatto;
-        this.logoAziendale = logoAziendale;
+        this.logoAziendale = "https://ui-avatars.com/api/?name=" + this.ragioneSociale;
         this.tipo = tipo;
     }
 

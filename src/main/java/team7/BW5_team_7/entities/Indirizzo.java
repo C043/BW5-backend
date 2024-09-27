@@ -23,7 +23,7 @@ public class Indirizzo {
     private UUID idIndirizzo;
     private String via;
     private int civico;
-    private int cap;
+    private String cap;
 
     @ManyToOne
     @JoinColumn(name = "id_citta")
@@ -41,7 +41,7 @@ public class Indirizzo {
     @JsonIgnore
     private Cliente cliente;
 
-    public Indirizzo(String via, int civico, int cap, Comune citta, Cliente cliente) {
+    public Indirizzo(String via, int civico, String cap, Comune citta, Cliente cliente) {
         this.via = via;
         this.civico = civico;
         this.citta = citta;

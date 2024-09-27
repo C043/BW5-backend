@@ -11,5 +11,5 @@ public interface ComuneRepository extends JpaRepository<Comune, UUID> {
 
     Comune findByDenominazione(String denominazione);
 
-   
+
 }

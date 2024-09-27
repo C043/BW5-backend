@@ -28,10 +28,8 @@ public record NewClienteDTO(
         String cognomeContatto,
         @NotNull(message = "Il telefono contatto è obbligatorio")
         Long telefonoContatto,
-        @NotNull(message = "Il logo aziendale è obbligatorio")
-        String logoAziendale,
         @NotNull(message = "Il tipo è obbligatorio")
-        @Pattern(regexp = "^(PA|SAS|SPA|SRL)$")
+        @Pattern(regexp = "^(PA|SAS|SPA|SRL|DI)$")
         String tipo,
         @NotEmpty(message = "Il Campo Via è obbligatorio!")
         String via,
@@ -40,6 +38,6 @@ public record NewClienteDTO(
         @NotEmpty(message = "Il Campo Città è obbligatorio!")
         String citta,
         @NotNull(message = "Il Campo Località è obbligatorio!")
-        int cap
+        String cap
 ) {
 }
