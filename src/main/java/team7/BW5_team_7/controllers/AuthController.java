@@ -2,7 +2,6 @@ package team7.BW5_team_7.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,14 +29,13 @@ public class AuthController {
 
     // metodo per creare il token
     @PostMapping("/login")
-    @PreAuthorize("hasAuthority('ADMIN') or #idUtente == principal.id")
-    public UtenteLoginRespDTO findAndCreateToken(@RequestBody UtenteLoginDTO body){
+    public UtenteLoginRespDTO findAndCreateToken(@RequestBody UtenteLoginDTO body) {
         return this.authService.checkAndCreateToken(body);
     }
 
     // endpoint per creare un nuovo utente
     @PostMapping("/register")
-    public UtenteRespDTO saveNewUtente(@RequestBody @Validated UtenteDTO body, BindingResult validation){
+    public UtenteRespDTO saveNewUtente(@RequestBody @Validated UtenteDTO body, BindingResult validation) {
         this.validation.validate(validation);
         return this.utenteService.save(body);
     }
