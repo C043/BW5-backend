@@ -12,7 +12,10 @@ import team7.BW5_team_7.entities.Ruolo;
 import team7.BW5_team_7.entities.Utente;
 import team7.BW5_team_7.exceptions.BadRequestException;
 import team7.BW5_team_7.exceptions.NotFoundException;
-import team7.BW5_team_7.payloads.*;
+import team7.BW5_team_7.payloads.AddRuoliDTO;
+import team7.BW5_team_7.payloads.RemoveRuoliDTO;
+import team7.BW5_team_7.payloads.UtenteDTO;
+import team7.BW5_team_7.payloads.UtenteRespDTO;
 import team7.BW5_team_7.repositories.UtenteRepository;
 
 import java.util.UUID;
@@ -62,11 +65,10 @@ public class UtenteService {
         } else {
             // crea il ruolo utente
             Ruolo defaultRole = new Ruolo("UTENTE");
-
-            defaultRole.aggiungiUtente(utente);
-
             utente.aggiungiRuolo(defaultRole);
-
+            defaultRole.aggiungiUtente(utente);
+            Ruolo admin = new Ruolo("ADMIN");
+            this.ruoliService.saveRuolo(admin);
             this.ruoliService.saveRuolo(defaultRole);
         }
 
@@ -151,7 +153,7 @@ public class UtenteService {
         return found;
     }
 
-    public Utente findAndRemoveRuolo(UUID idUtente, RemoveRuoliDTO body){
+    public Utente findAndRemoveRuolo(UUID idUtente, RemoveRuoliDTO body) {
 
         // cerco l'utente alla quale togliere il ruolo
         Utente found = this.findById(idUtente);
