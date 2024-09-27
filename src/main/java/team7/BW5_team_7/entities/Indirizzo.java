@@ -36,7 +36,7 @@ public class Indirizzo {
     @Enumerated(EnumType.STRING)
     private TipoIndirizzo tipoIndirizzo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cliente")
     @JsonIgnore
     private Cliente cliente;

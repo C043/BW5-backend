@@ -63,7 +63,7 @@ public class Cliente {
 
     private String provincia;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Indirizzo> listaIndirizzi;
 
     public Cliente(String ragioneSociale, String partitaIve, String email, double fatturatoAnnuale, String pec, Long telefono, String emailContatto, String nomeContatto,
