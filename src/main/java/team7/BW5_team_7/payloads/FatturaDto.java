@@ -15,7 +15,7 @@ public record FatturaDto(
         double importo,
 
         @Positive(message = "Il numero della fattura deve essere un valore positivo!")
-        @Min(1)
+        @Min(value = 1)
         int numeroFattura,
 
         @NotEmpty(message = "Il Campo Stato è obbligatorio!")
