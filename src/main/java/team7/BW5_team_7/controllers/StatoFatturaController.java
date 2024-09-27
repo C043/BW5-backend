@@ -24,7 +24,7 @@ public class StatoFatturaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('ADMIN') or #idUtente == principal.id")
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     public StatoFattureDtoResp saveIndirizzo(@RequestBody @Validated StatoFatturaDto body, BindingResult validationResult) throws
             BadRequestException {
         if (validationResult.hasErrors()) {
@@ -46,13 +46,13 @@ public class StatoFatturaController {
     }
 
     @GetMapping("/{idStatoFattura}")
-    @PreAuthorize("hasAuthority('ADMIN') or #idUtente == principal.id")
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     public StatoFattura findById(@PathVariable UUID idStatoFattura) {
         return this.statoFatturaService.findById(idStatoFattura);
     }
 
     @PutMapping("/{idStatoFattura}")
-    @PreAuthorize("hasAuthority('ADMIN')")// SOLO GI ADMIN POSSONO MODIFICARE LE RISORSE
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     @ResponseStatus(HttpStatus.CREATED)
     public StatoFattureDtoResp findAndUpdate(@PathVariable UUID idStatoFattura, @RequestBody StatoFatturaDto body) throws Throwable {
         return new StatoFattureDtoResp(this.statoFatturaService.findAndUpdate(idStatoFattura, body).getIdStatoFattura());
