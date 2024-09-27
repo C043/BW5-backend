@@ -11,6 +11,7 @@ import team7.BW5_team_7.entities.Comune;
 import team7.BW5_team_7.entities.Indirizzo;
 import team7.BW5_team_7.enums.TipoCliente;
 import team7.BW5_team_7.enums.TipoIndirizzo;
+import team7.BW5_team_7.exceptions.BadRequestException;
 import team7.BW5_team_7.exceptions.NotFoundException;
 import team7.BW5_team_7.payloads.IndirizzoDto;
 import team7.BW5_team_7.payloads.NewClienteDTO;
@@ -34,6 +35,7 @@ public class IndirizzoService {
         if (foundComune == null) throw new NotFoundException("il Comune cercato non è Stato trovato!");
         Cliente foundCliente = this.clientiRepository.findById(UUID.fromString(body.cliente())).orElseThrow(() -> new NotFoundException("Cliente non trovato"));
         if (foundCliente == null) throw new NotFoundException("il Comune cercato non è Stato trovato!");
+        if (foundCliente.getListaIndirizzi().size() == 2) throw new BadRequestException("Ogni cliente può avere massimo 2 indirizzi");
         Indirizzo indirizzo = new Indirizzo(body.via(), body.civico(), body.cap(), foundComune, foundCliente);
         return indirizzoRepository.save(indirizzo);
     }
