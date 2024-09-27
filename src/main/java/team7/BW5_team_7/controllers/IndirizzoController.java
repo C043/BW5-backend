@@ -25,7 +25,7 @@ public class IndirizzoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-//    @PreAuthorize("hasAuthority('ADMIN')")// SOLO GI ADMIN POSSONO ELIMINARE LE RISORSE
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     public IndirizzoDtoResp saveIndirizzo(@RequestBody @Validated IndirizzoDto body, BindingResult validationResult) throws
             BadRequestException {
         if (validationResult.hasErrors()) {
@@ -39,6 +39,7 @@ public class IndirizzoController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'UTENTE')")
     public Page<Indirizzo> findAll(@RequestParam(defaultValue = "0") int page,
                                    @RequestParam(defaultValue = "10") int size,
                                    @RequestParam(defaultValue = "idIndirizzo") String sortBy) {
@@ -46,33 +47,34 @@ public class IndirizzoController {
     }
 
     @GetMapping("/{idIndirizzo}")
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     public Indirizzo findById(@PathVariable UUID idIndirizzo) {
         return this.indirizzoService.findById(idIndirizzo);
     }
 
     @PutMapping("/{idIndirizzo}")
-    @PreAuthorize("hasAuthority('ADMIN')")// SOLO GI ADMIN POSSONO MODIFICARE LE RISORSE
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     @ResponseStatus(HttpStatus.CREATED)
     public IndirizzoDtoResp findAndUpdate(@PathVariable UUID idIndirizzo, @RequestBody IndirizzoDto body) throws Throwable {
         return new IndirizzoDtoResp(this.indirizzoService.findAndUpdate(idIndirizzo, body).getIdIndirizzo());
     }
 
     @DeleteMapping("/{idIndirizzo}")
-    @PreAuthorize("hasAuthority('ADMIN')")// SOLO GI ADMIN POSSONO ELIMINARE LE RISORSE
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findAndDelete(@PathVariable UUID idIndirizzo) {
         this.indirizzoService.findAndDelete(idIndirizzo);
     }
 
     @PatchMapping("/setsedeoperativa/{idIndirizzo}")
-    @PreAuthorize("hasAuthority('ADMIN')")// SOLO GI ADMIN POSSONO ELIMINARE LE RISORSE
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     @ResponseStatus(HttpStatus.CREATED)
     public IndirizzoDtoResp findAndSetSedeOperativa(@PathVariable UUID idIndirizzo, @RequestBody Indirizzo body) {
         return new IndirizzoDtoResp(this.indirizzoService.findIndirizzoSetSede(idIndirizzo, body).getIdIndirizzo());
     }
 
     @PatchMapping("/setsedeamministrativa/{idIndirizzo}")
-    @PreAuthorize("hasAuthority('ADMIN')")// SOLO GI ADMIN POSSONO ELIMINARE LE RISORSE
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     @ResponseStatus(HttpStatus.CREATED)
     public IndirizzoDtoResp findAndSetSedeAmministrativa(@PathVariable UUID idIndirizzo, @RequestBody Indirizzo body) {
         return new IndirizzoDtoResp(this.indirizzoService.findIndirizzoSetSedeAmministrativa(idIndirizzo, body).getIdIndirizzo());

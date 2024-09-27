@@ -3,6 +3,7 @@ package team7.BW5_team_7.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,7 @@ public class ClientiController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     public Object getAllClienti(@RequestParam(defaultValue = "0") int page,
                                 @RequestParam(defaultValue = "ragioneSociale") String sortBy,
                                 @RequestParam(defaultValue = "5") int size,
@@ -56,17 +58,20 @@ public class ClientiController {
     }
 
     @GetMapping("/{clienteId}")
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     public Cliente getClienteById(@PathVariable UUID clienteId) {
         return this.clientiService.getClienteById(clienteId);
     }
 
     @DeleteMapping("/{clienteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteCliente(@PathVariable UUID clienteId) {
         this.clientiService.deleteCliente(clienteId);
     }
 
     @PutMapping("/{clienteId}")
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     public RespDTO putCliente(@PathVariable UUID clienteId, @RequestBody @Validated NewClienteDTO body, BindingResult validation) {
         this.validation.validate(validation);
         Cliente updatedCliente = this.clientiService.putCliente(clienteId, body);

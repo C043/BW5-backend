@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import team7.BW5_team_7.entities.Cliente;
 import team7.BW5_team_7.entities.Fattura;
@@ -37,6 +38,7 @@ public class FatturaController {
 
     // Ottieni tutte le fatture
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     public List<Fattura> getAllFatture(@RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "5") int size,
                                        @RequestParam(defaultValue = "") String sortBy,
@@ -64,12 +66,14 @@ public class FatturaController {
     // Crea una nuova fattura
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     public Fattura createFattura(@RequestBody FatturaDto body) {
         return this.fatturaService.createFattura(body);
     }
 
     // Ottieni una fattura per ID
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     public ResponseEntity<Fattura> getFatturaById(@PathVariable UUID id) {
         Fattura fattura = fatturaService.getFatturaById(id);
         return ResponseEntity.ok(fattura);
@@ -77,6 +81,7 @@ public class FatturaController {
 
     // Aggiorna una fattura
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN', 'UTENTE')")
     public ResponseEntity<Fattura> updateFattura(@PathVariable UUID id, @RequestBody FatturaDto dettagliFattura) {
         Fattura fatturaAggiornata = fatturaService.updateFattura(id, dettagliFattura);
         return ResponseEntity.ok(fatturaAggiornata);
@@ -84,6 +89,7 @@ public class FatturaController {
 
     // Elimina una fattura
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> deleteFattura(@PathVariable UUID id) {
         fatturaService.deleteFattura(id);
         return ResponseEntity.noContent().build();

@@ -24,6 +24,7 @@ public class StatoFatturaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('ADMIN') or #idUtente == principal.id")
     public StatoFattureDtoResp saveIndirizzo(@RequestBody @Validated StatoFatturaDto body, BindingResult validationResult) throws
             BadRequestException {
         if (validationResult.hasErrors()) {
@@ -37,6 +38,7 @@ public class StatoFatturaController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Page<StatoFattura> findAll(@RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "10") int size,
                                       @RequestParam(defaultValue = "idStatoFattura") String sortBy) {
@@ -44,6 +46,7 @@ public class StatoFatturaController {
     }
 
     @GetMapping("/{idStatoFattura}")
+    @PreAuthorize("hasAuthority('ADMIN') or #idUtente == principal.id")
     public StatoFattura findById(@PathVariable UUID idStatoFattura) {
         return this.statoFatturaService.findById(idStatoFattura);
     }
