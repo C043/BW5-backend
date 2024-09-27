@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
 
 public record AddRuoliDTO(
-        @NotEmpty(message = "È obbliogatorio inserire almeno un  ruolo")
+        @NotEmpty(message = "È obbligatorio inserire almeno un  ruolo")
         List<String> ruoli
 ) {
 }
