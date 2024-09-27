@@ -53,5 +53,8 @@ public class Ruolo {
     }
 
     // TODO: creare metodo per rimuovere un utente
-
+    public void rimuoviUtente(Utente utente) {
+        this.utenti.add(utente);
+        utente.getRuoli().remove(this);
+    }
 }

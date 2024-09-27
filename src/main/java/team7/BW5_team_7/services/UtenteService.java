@@ -12,9 +12,7 @@ import team7.BW5_team_7.entities.Ruolo;
 import team7.BW5_team_7.entities.Utente;
 import team7.BW5_team_7.exceptions.BadRequestException;
 import team7.BW5_team_7.exceptions.NotFoundException;
-import team7.BW5_team_7.payloads.AddRuoliDTO;
-import team7.BW5_team_7.payloads.UtenteDTO;
-import team7.BW5_team_7.payloads.UtenteRespDTO;
+import team7.BW5_team_7.payloads.*;
 import team7.BW5_team_7.repositories.UtenteRepository;
 
 import java.util.UUID;
@@ -95,7 +93,6 @@ public class UtenteService {
         return this.utenteRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Utente non trovato con l'email " + email));
     }
 
-
     public void findAndDelete(UUID idUtente) {
         Utente found = this.findById(idUtente);
 
@@ -143,6 +140,10 @@ public class UtenteService {
         // cerco il ruolo o ruoli
         for (String ruolo : body.ruoli()) {
             Ruolo foundRuolo = this.ruoliService.findByRuolo(ruolo);
+
+            // controllo per ogni ruolo se è già associato all'utente
+            if (found.getRuoli().contains(foundRuolo)) continue;
+
             found.aggiungiRuolo(foundRuolo);
         }
 
@@ -150,25 +151,21 @@ public class UtenteService {
         return found;
     }
 
-// TODO:
-//    public void findAndRemoveRuolo(UUID idUtente, String ruolo){
-//
-//        // cerco l'utente alla quale togliere il ruolo
-//        Utente found = this.findById(idUtente);
-//
-//        // cerco il ruolo da eliminare
-//        Ruolo roleFound = found.getRuoli()
-//                .stream()
-//                .filter(ruoloCorrente -> ruoloCorrente.getRuolo().equals(ruolo))
-//                .findFirst()
-//                .orElseThrow(() -> new RuntimeException("niente"));
-//
-//        // rimuovere il ruolo dall'utente
-//        found.rimuoviRuolo(roleFound);
-//
-//        // salvare l'utente aggiornato
-//        this.utenteRepository.save(found);
-//
-//    }
+    public Utente findAndRemoveRuolo(UUID idUtente, RemoveRuoliDTO body){
+
+        // cerco l'utente alla quale togliere il ruolo
+        Utente found = this.findById(idUtente);
+
+        for (String ruolo : body.ruoli()) {
+            Ruolo foundRuolo = this.ruoliService.findByRuolo(ruolo);
+            found.rimuoviRuolo(foundRuolo);
+        }
+
+        // salvare l'utente aggiornato
+        this.utenteRepository.save(found);
+
+        return found;
+
+    }
 
 }

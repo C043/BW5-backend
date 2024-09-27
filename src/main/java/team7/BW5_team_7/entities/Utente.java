@@ -59,6 +59,11 @@ public class Utente implements UserDetails {
         this.ruoli.add(ruolo);
     }
 
+    public void rimuoviRuolo(Ruolo ruolo) {
+        this.ruoli.remove(ruolo);
+        ruolo.getUtenti().remove(this);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.ruoli.stream()
