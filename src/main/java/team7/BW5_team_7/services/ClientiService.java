@@ -65,7 +65,7 @@ public class ClientiService {
         found.setLogoAziendale(body.logoAziendale());
         found.setNomeContatto(body.nomeContatto());
         found.setRagioneSociale(body.ragioneSociale());
-        found.setPartitaIve(body.partitaIva());
+        found.setPartitaIva(body.partitaIva());
         found.setFatturatoAnnuale(body.fatturatoAnnuale());
         found.setTelefonoContatto(body.telefonoContatto());
         this.clientiRepository.save(found);

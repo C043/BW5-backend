@@ -26,7 +26,7 @@ public class Cliente {
     private String ragioneSociale;
 
     @Column(name = "partita_iva")
-    private String partitaIve;
+    private String partitaIva;
 
     private String email;
 
@@ -69,7 +69,7 @@ public class Cliente {
     public Cliente(String ragioneSociale, String partitaIve, String email, double fatturatoAnnuale, String pec, Long telefono, String emailContatto, String nomeContatto,
                    String cognomeContatto, Long telefonoContatto, String logoAziendale, TipoCliente tipo) {
         this.ragioneSociale = ragioneSociale;
-        this.partitaIve = partitaIve;
+        this.partitaIva = partitaIve;
         this.email = email;
         this.dataInserimento = LocalDate.now();
         this.dataUltimoContatto = LocalDate.now();
@@ -89,7 +89,7 @@ public class Cliente {
         return "Cliente{" +
                 "id=" + id +
                 ", ragioneSociale='" + ragioneSociale + '\'' +
-                ", partitaIve='" + partitaIve + '\'' +
+                ", partitaIve='" + partitaIva + '\'' +
                 ", email='" + email + '\'' +
                 ", dataInserimento=" + dataInserimento +
                 ", dataUltimoContatto=" + dataUltimoContatto +
