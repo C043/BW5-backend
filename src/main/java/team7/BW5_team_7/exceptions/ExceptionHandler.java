@@ -2,6 +2,7 @@ package team7.BW5_team_7.exceptions;
 
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -15,6 +16,12 @@ public class ExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorPayload handleBadRequest(BadRequestException ex) {
         return new ErrorPayload(ex.getMessage(), LocalDateTime.now());
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorPayload handleJsonBadParse(HttpMessageNotReadableException ex) {
+        return new ErrorPayload("Tipo di dato inserito non valido", LocalDateTime.now());
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentTypeMismatchException.class)
